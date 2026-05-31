@@ -1,0 +1,27 @@
+{
+  "date": "2026-05-31",
+  "domains": ["sota-benchmark-agent"],
+  "rubric_version": 2,
+  "field": [
+    { "repo": "stanford-oval/storm",                 "stars": 28283, "pushed": "2025-09-30", "note": "stale ~8mo" },
+    { "repo": "assafelovic/gpt-researcher",          "stars": 27404, "pushed": "2026-05-28" },
+    { "repo": "langchain-ai/open_deep_research",     "stars": 11535, "pushed": "2026-05-26" },
+    { "repo": "ossf/scorecard",                      "stars": 5467,  "pushed": "2026-05-25" },
+    { "repo": "paperswithcode/paperswithcode-data",  "stars": null,  "note": "shut down Jul 2025; data-only" }
+  ],
+  "matrix": [
+    { "id": "web-retrieval",        "us": "met",     "tier": "table-stakes" },
+    { "id": "cited-grounding",      "us": "met",     "tier": "table-stakes" },
+    { "id": "structured-report",    "us": "met",     "tier": "table-stakes" },
+    { "id": "claim-verification",   "us": "met",     "tier": "table-stakes" },
+    { "id": "saturating-search",    "us": "met",     "tier": "table-stakes" },
+    { "id": "deterministic-rubric", "us": "met",     "tier": "table-stakes" },
+    { "id": "reproducible-rerun",   "us": "met",     "tier": "table-stakes" },
+    { "id": "machine-readable",     "us": "met",     "tier": "edge" },
+    { "id": "parallel-comparator-fanout", "us": "met", "tier": "edge" }
+  ],
+  "coverage": { "met": 7, "total": 7, "pct": 100 },
+  "tier": "FRONTIER",
+  "gaps_total": 0,
+  "caveat": "Prompt-only skill for the core scan; exhaustive mode now delegates concurrent comparator analysis to the sota-scan-fanout Workflow (built + smoke-tested green 2026-05-31). All edge capabilities now met."
+}

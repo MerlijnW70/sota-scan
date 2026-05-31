@@ -1,0 +1,16 @@
+{
+  "domain": "sota-benchmark-agent",
+  "version": 2,
+  "note": "Capabilities a cited repo-vs-field benchmarking agent is expected to have. Drawn from the deep-research-agent field (gpt-researcher, storm, open_deep_research) and the grade-a-repo-against-a-rubric field (ossf/scorecard). Score the skill's SKILL.md against THIS list so coverage/tier stay comparable across runs. v2: parallel-fanout sharpened to parallel-comparator-fanout (workflow-layer concurrent comparator analysis) and marked met after the sota-scan-fanout Workflow was built and smoke-tested green.",
+  "capabilities": [
+    { "id": "web-retrieval",        "tier": "table-stakes", "test": "multi-source web + GitHub retrieval (WebSearch/WebFetch/gh)" },
+    { "id": "cited-grounding",      "tier": "table-stakes", "test": "every claim tied to a real source; no-source-no-claim rule" },
+    { "id": "structured-report",    "tier": "table-stakes", "test": "deterministic action-first dashboard with fixed section order" },
+    { "id": "claim-verification",   "tier": "table-stakes", "test": "per-gap primary-source confirmation before output" },
+    { "id": "saturating-search",    "tier": "table-stakes", "test": "search until two empty rounds, not a fixed count" },
+    { "id": "deterministic-rubric", "tier": "table-stakes", "test": "score against a saved per-domain capability list" },
+    { "id": "reproducible-rerun",   "tier": "table-stakes", "test": "persist run to .sota/last-scan.json + diff against prior" },
+    { "id": "parallel-comparator-fanout", "tier": "edge",   "test": "exhaustive mode can fetch and analyze multiple comparators concurrently through a workflow layer" },
+    { "id": "machine-readable",     "tier": "edge",         "test": "emit the capability matrix as structured JSON" }
+  ]
+}

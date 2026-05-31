@@ -1,0 +1,7 @@
+# Node / editor noise
+node_modules/
+.DS_Store
+*.log
+
+# Nothing else to ignore — the .sota/ here is intentional (sota-scan's
+# self-benchmark, committed as dogfooding evidence).
