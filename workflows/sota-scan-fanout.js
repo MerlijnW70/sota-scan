@@ -123,16 +123,18 @@ const SYNTHESIS = {
       type: 'array',
       items: {
         type: 'object',
-        required: ['rank', 'capability', 'tier', 'confidence', 'why', 'study', 'step1'],
+        required: ['rank', 'capability', 'tier', 'gap_confidence', 'impl_confidence', 'why', 'study', 'step1'],
         properties: {
           rank: { type: 'integer' },
           capability: { type: 'string' },
           tier: { type: 'string', enum: ['table-stakes', 'edge'] },
           effort: { type: 'string', description: '~2h / ~1d / ~3d estimate' },
-          confidence: { type: 'string', enum: ['high', 'medium', 'low'] },
+          gap_confidence: { type: 'string', enum: ['high', 'medium', 'low'], description: 'confidence the gap is REAL (grounded on both sides)' },
+          impl_confidence: { type: 'string', enum: ['high', 'medium', 'low'], description: 'confidence the prescribed integration path is the RIGHT one (high only if the API/approach was confirmed)' },
+          needs_verification: { type: 'string', description: 'the open integration question to confirm before committing to the patch; "" if impl_confidence is high' },
           why: { type: 'string' },
-          study: { type: 'string', description: 'owner/repo → file/feature to copy from' },
-          step1: { type: 'string', description: 'patch-oriented: first file to create/edit AND first function/command/test' },
+          study: { type: 'string', description: 'owner/repo → file/feature — SOURCE OF INSPIRATION (desired UX), not a verified integration path' },
+          step1: { type: 'string', description: 'patch-oriented: first file to create/edit AND first function/command/test. If it depends on an unverified external API, give 2-3 implementation OPTIONS instead of one over-specific call.' },
         },
       },
     },
@@ -196,7 +198,9 @@ Produce:
 - coverage: {met, total, pct} computed over TABLE-STAKES capabilities only. pct = round(met/total*100).
 - tier: gaps = table-stakes capabilities we MISS or only PARTIAL. FRONTIER=0 · COMPETITIVE=1-2 · BEHIND=3-4 · LAGGING=5+.
 - gaps_total: true count of table-stakes gaps.
-- gaps[]: ranked worst-first. Each {rank, capability, tier, effort (~2h/~1d/~3d guess), confidence, why (for THIS repo's goal), study (owner/repo → file to copy), step1 (PATCH-ORIENTED: name the first file to create/edit AND the first function/command/test to add — not "create a loader")}. Include all gaps; the skill will cap the display.
+- gaps[]: ranked worst-first. Each {rank, capability, tier, effort (~2h/~1d/~3d guess), gap_confidence, impl_confidence, needs_verification, why (for THIS repo's goal), study (owner/repo → file — SOURCE OF INSPIRATION/desired UX, NOT a verified call), step1 (PATCH-ORIENTED: name the first file to create/edit AND the first function/command/test to add — not "create a loader")}. Include all gaps; the skill will cap the display.
+
+Inspiration vs. integration: \`study\` shows the UX to aim for; it does NOT establish that the reference's specific API is the right thing for us to call. When \`step1\` depends on a third-party API/crate you have NOT confirmed is public, stable, and intended for this use, do NOT prescribe the exact call as settled — set \`impl_confidence\` below "high", name the open question in \`needs_verification\`, and make \`step1\` list 2-3 implementation OPTIONS (use the reference's public API if stable / drop to lower-level crates / build a local renderer) rather than one over-specific line. A real gap with an unsure patch is gap_confidence:high + impl_confidence:medium — keep the two axes separate, never blend them into one number.
 
 Hard rules: no gap without a cited source; no guessed file paths; every gap must be tied to both repo evidence and external evidence. Return ONLY the structured object.`,
   { label: 'synthesize', phase: 'Synthesize', schema: SYNTHESIS },

@@ -121,17 +121,22 @@ The capability *list* — not the per-run scores — is what must stay stable so
 The user must be able to act in the next five minutes. Lead with the action, make every gap a copyable task. Each gap is rendered as a card:
 
 ```
-[!]  #1  <Capability>                       table-stakes · effort ~Xd · confidence: high/medium/low
+[!]  #1  <Capability>            table-stakes · effort ~Xd · gap: high · impl: medium
      Why:    <one line — why this matters for THIS repo's goal>
-     Study:  <owner/repo → specific file/feature that implements it>
-     Step 1: <the first concrete thing to do — name the first file to create/edit AND the first function/command/test to add>
+     Study:  <owner/repo → specific file/feature> — source of inspiration (the desired UX)
+     Step 1: <first file to create/edit AND first function/command/test to add>
+     Verify: <the integration assumption to confirm before committing to that patch — omit only if already verified>
 ```
 
 - `[!]` = table-stakes gap (do these first), `[~]` = edge gap.
 - **Effort** = your rough *estimate* (`~2h`, `~1d`, `~3d`) so the user can triage — it's a guess, not a cited fact; the `~` signals that. Don't dress it up as precise.
-- **Study** is the load-bearing field — a gap without a reference to copy from is just a complaint.
+- **Study** is the load-bearing field — a gap without a reference to copy from is just a complaint. But **Study is the source of inspiration, not a verified integration path.** "Repo X shows the UX we want" does not establish that *its specific API is the right thing for us to call.* Confirm the public API is stable and suitable for our use before presenting it as the patch.
 - **Step 1 must be patch-oriented, not directional.** Name the first file to create or edit *and* the first function/command/test to add. ✅ ``create `src/config.rs` with `load_config(path) -> Result<Config>` and wire it into `main.rs` before command dispatch`` — ❌ "create a config loader." The reader should be able to start typing immediately.
-- **Confidence** on every card: `high` (grounded in code/docs on both sides), `medium` (one side inferred or table-stakes classification is judgement), `low` (effort estimate or unverified inference dominates). This separates "we definitely lack a thing they definitely have" from a softer call.
+- **Don't prescribe an unverified external call as the settled patch.** When Step 1 depends on a third-party API/crate you haven't confirmed is public, stable, and intended for this use, do **not** write it as if it's definitely the right line (❌ confidently emitting `pretty_assertions::Comparison::new(&a, &b)` when you haven't checked that `Comparison` is a stable public API). Instead: state the reference UX, then list 2–3 **implementation options** (A. use the reference's public API if stable enough; B. drop to lower-level crates directly; C. build a local renderer) and put the open question on the `Verify:` line. Prescribe one exact call only when you've confirmed it; otherwise the options + Verify line *are* the honest patch.
+- **Two confidence axes on every card** — keep them separate, because "we clearly lack a thing they clearly have" can pair with "but how to wire it in is unsettled":
+  - `gap:` — confidence the gap is real (high = grounded in code/docs on both sides; medium = one side inferred or the table-stakes call is judgement; low = unverified inference dominates).
+  - `impl:` — confidence the prescribed integration path is the right one (high = you confirmed the API/approach; medium = inspiration is solid but the exact call is unverified; low = approach is a guess).
+  - Add a `needs-verification:` note naming the open question (e.g. "public Comparison/StrComparison API suitability") whenever `impl:` is below high. A real gap with an unsure patch is `gap: high · impl: medium` — not a single blended number that hides which half is soft.
 - Order strictly highest-impact first. Cap the rendered **cards** at the top 5, but always print the *true* total gap count next to the tier (e.g. "BEHIND · 7 table-stakes gaps, top 5 shown") — capping the display must never hide how deep the tier goes, since the worst tier (LAGGING) starts at exactly 5 gaps.
 
 ## Step 4 — Persist the run, then diff against last time
@@ -192,7 +197,7 @@ Run this pass on your own draft. Treat the two groups differently: a failed **bl
 9. **Coverage math checks out:** bar is 10 segments, fill = round(pct/10), label shows real `met/total`; **tier matches the gap count** and the true total is shown even if cards are capped at 5.
 10. **The run was persisted** to `.sota/last-scan.json` — written *once, after* all `gh`/web calls returned — with a "Since last scan" line (or baseline note); or, if read-only, rendered as copyable JSON marked "not written."
 11. **Each leaderboard row has a comparator type**, and inclusion is justified by type — not stars alone.
-12. **Every gap card carries a confidence label**, and the #1 task names a concrete file + function/command/test (patch-oriented, not directional).
+12. **Every gap card carries both confidence axes** (`gap:` and `impl:`), the #1 task names a concrete file + function/command/test (patch-oriented, not directional), and **no unverified external API is prescribed as the settled patch** — where the integration path is unconfirmed, `impl:` is below high, a `needs-verification:` note names the open question, and Step 1 offers options rather than one over-specific call.
 
 ## Output shape — action-first dashboard
 
@@ -210,7 +215,7 @@ Detected domain: <domain>  ·  Adjacent considered: <A>, <B>  ·  Excluded: <C> 
 Benchmark assumption: <one sentence>
 
 ### ▶ Do this next
-> **<the #1 gap as one imperative line>** — copy the approach from `owner/repo → file`. First step: create/edit `<file>`, add `<function/command/test>`. Effort ~Xd · confidence: <high/medium/low>.
+> **<the #1 gap as one imperative line>** — take the UX from `owner/repo → file` (inspiration, not a verified call). First step: create/edit `<file>`, add `<function/command/test>`; if the integration path is unverified, list the options and what to confirm first. Effort ~Xd · gap: <high/medium/low> · impl: <high/medium/low>.
 
 ### 🏆 The field
 <leaderboard: rank · owner/repo · type (canonical/popular/technically advanced/niche-relevant/stale-reference) · stars · why included — top 5, each linked>
