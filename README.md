@@ -1,91 +1,107 @@
 # sota-scan
 
-A [Claude Code](https://claude.com/claude-code) skill that **benchmarks a repository against the state of the art** — it scans real online repos (GitHub + the wider web) in the same domain, then produces a **cited capability matrix** and a **ranked, repo-grounded gap list**.
+### Is your project as good as the best ones out there? Find out — with receipts.
 
-The job is *grounded comparison*, not a generic best-practices listicle. Every gap it reports is tied to **(a)** something real in *your* repo and **(b)** a real online source. **No source → no claim.**
+Point **sota-scan** at whatever you're building and it answers one simple question:
 
-## What you get
+> **"What do the best projects like mine have that I don't?"**
 
-Run it and you get an action-first dashboard:
+It goes and looks at the top real projects in your space, compares them to yours, and hands you back a short, honest scorecard — plus a clear to-do list of exactly what to add next, with the most important thing first.
+
+No vague advice. No "best practices" listicle. **Every single thing it says you're missing points to a real project that already has it**, so you can go look for yourself.
+
+---
+
+## Why people love it
+
+🪞 **An honest mirror.** See where you *actually* stand against the best — not where you hope you stand.
+
+🧾 **Receipts, not opinions.** It never just says "you should add X." It says "Project Y has X — here's where." If it can't point to a real source, it doesn't say it.
+
+✅ **A real to-do list.** You get a ranked list of what to fix, worst-first, each with a one-line "why it matters" and a concrete first step you can start on today.
+
+📈 **Tracks your progress.** Run it again next month and it shows what got better, what slipped, and how you stack up now.
+
+---
+
+## What you actually get back
+
+A clean, at-a-glance report — the verdict and your single most important next move are right at the top:
 
 ```
-## 🧭 SOTA Standing — <repo>   ·   mode: exhaustive
-> Verdict: <one sentence — are we behind, and on what?>
-Tier: BEHIND (3 gaps)  ·  Coverage █████░░░░░ 63% (5/8 table-stakes met)  ·  Field: 11 repos
+🧭 SOTA Standing — my-project
 
-### ▶ Do this next
-> <the #1 gap as one imperative line> — copy from owner/repo → file. First step: <concrete>. Effort ~Xd.
+   Verdict: Solid core, but behind the leaders on testing and security checks.
 
-### 🏆 The field        ### 📊 Capability matrix        ### 🔧 Gaps (worst first)
+   Score:  █████░░░░░  63%        Standing: BEHIND        Compared against: 11 projects
+
+   ▶ Do this next:
+     Add automated injection detection — the one thing every serious
+     competitor has and you don't. Copy the approach from <real project>.
+
+   🏆 The leaders        📊 How you compare        🔧 Your to-do list (worst first)
 ```
 
-- **Capability matrix** — rows = capabilities the field expects; columns = Us (✅/⚠️/❌) · who has it · gap? · cited reference.
-- **Ranked gaps** — each a copyable, patch-oriented task (`Why / Study / Step 1`) with an effort estimate and a confidence label.
-- **Reproducible** — scores against a saved per-domain rubric and persists each run to `.sota/`, so the next scan shows a *diff* (coverage Δ, tier change, newly met/lost).
+…followed by a side-by-side comparison and the full to-do list, each item with a real project to learn from.
 
-## Execution modes
+---
 
-| Mode | Comparators | Saturation | Output |
-|---|---|---|---|
-| `quick` | 3–5 | none (early stop) | top 3 gaps |
-| `standard` *(default)* | 5–10 | light | full dashboard |
-| `exhaustive` | 10+ | strict (two empty rounds) | full dashboard + persisted artifacts |
+## Try it in 2 minutes
 
-In **exhaustive** mode the comparator analysis is fanned out across concurrent agents via the included [`workflows/sota-scan-fanout.js`](workflows/sota-scan-fanout.js) workflow (discovery stays inline, parallel analysis goes to the workflow, persistence comes back to the skill).
+sota-scan is a small add-on ("skill") for [Claude Code](https://claude.com/claude-code). To install it, copy two files into your Claude setup:
 
-## Install
-
-Copy the skill into your Claude Code config:
-
+**Mac / Linux**
 ```bash
-# the skill
-mkdir -p ~/.claude/skills/sota-scan
-cp SKILL.md ~/.claude/skills/sota-scan/SKILL.md
-
-# the exhaustive-mode fan-out workflow
-mkdir -p ~/.claude/workflows
-cp workflows/sota-scan-fanout.js ~/.claude/workflows/sota-scan-fanout.js
+mkdir -p ~/.claude/skills/sota-scan ~/.claude/workflows
+cp SKILL.md ~/.claude/skills/sota-scan/
+cp workflows/sota-scan-fanout.js ~/.claude/workflows/
 ```
 
-On Windows:
-
+**Windows (PowerShell)**
 ```powershell
 New-Item -ItemType Directory -Force ~/.claude/skills/sota-scan, ~/.claude/workflows | Out-Null
-Copy-Item SKILL.md ~/.claude/skills/sota-scan/SKILL.md
-Copy-Item workflows/sota-scan-fanout.js ~/.claude/workflows/sota-scan-fanout.js
+Copy-Item SKILL.md ~/.claude/skills/sota-scan/
+Copy-Item workflows/sota-scan-fanout.js ~/.claude/workflows/
 ```
 
-Then, inside any repo, invoke it from Claude Code:
+Then open Claude Code inside any project and just say:
 
 ```
-/sota-scan                     # standard scan of the current repo
-/sota-scan exhaustive          # serious benchmark (investor/release readiness)
-/sota-scan quick               # fast ballpark
+/sota-scan
 ```
 
-…or just ask: *"is our X top-tier?"*, *"what are we missing vs the best?"*, *"study online what others do."*
+or simply ask it in your own words:
 
-## What it writes
+- *"Is my project top-tier?"*
+- *"What am I missing compared to the best?"*
+- *"Go study what the best projects out there do, and compare us."*
 
-Each repo you scan gets its own results folder (the skill leaves the report behind so progress is diffable over time):
+That's it. It does the research and hands you the scorecard.
 
-```
-<scanned-repo>/.sota/
-├── rubric.<domain>.json   # the fixed scoring axis for that domain
-└── last-scan.json         # the latest scan + its coverage/tier/gaps
-```
+---
 
-Commit those or `.gitignore` them — your call.
+## Pick how deep you want to go
 
-## Requirements
+| Say… | You get… | Good for |
+|---|---|---|
+| `/sota-scan quick` | a fast ballpark, top 3 gaps | a 30-second gut check |
+| `/sota-scan` | the full scorecard | the everyday "where do we stand?" |
+| `/sota-scan exhaustive` | the deepest, widest scan | investor / launch-readiness, "leave nothing out" |
 
-- Claude Code with web access (`WebSearch`/`WebFetch`) and, ideally, the `gh` CLI for exact star/recency numbers.
-- For `exhaustive` mode's parallel fan-out, the Workflow capability (the skill falls back to a sequential scan and discloses it if unavailable).
+---
 
-## Dogfooding
+## Where it keeps your results
 
-This repo's own [`.sota/`](.sota/) holds sota-scan's scan **of itself** against the deep-research-agent / repo-grading field (`gpt-researcher`, `storm`, `open_deep_research`, `ossf/scorecard`): **FRONTIER, 7/7 table-stakes met**.
+Each project you scan gets a small `.sota/` folder with its scorecard, so the next scan can show your progress over time. Keep it or ignore it — your choice.
 
-## License
+---
 
-MIT — see [LICENSE](LICENSE).
+## Good to know
+
+- It needs **Claude Code** with internet access so it can look up real projects.
+- It only compares you *within what your project is already trying to be* — it won't tell you to pivot, just how to be the best version of what you already are.
+- Curious whether it practices what it preaches? It scanned **itself** against the best research/benchmarking tools and came out top-tier — that report is in this repo's [`.sota/`](.sota/) folder.
+
+---
+
+MIT licensed — free to use, copy, and build on. See [LICENSE](LICENSE).
