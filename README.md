@@ -83,6 +83,22 @@ Done. It does the rest.
 | `/sota-scan` | full scorecard | everyday use |
 | `/sota-scan exhaustive` | the deepest scan | launch / investor ready |
 
+**First time? Start with `quick`.** Cheap, fast taste. Go deeper once you like it.
+
+---
+
+## What it costs
+
+It does real research — reads a dozen competitor projects, not just summaries. So it's not instant or free:
+
+| Mode | Roughly |
+|---|---|
+| `quick` | ~80–150k tokens · a minute or two |
+| `standard` | ~150–350k tokens · a few minutes |
+| `exhaustive` | ~400k+ tokens · several minutes |
+
+Use it now and then — before a launch, a pitch, or when you're curious — not on every commit. On a Claude plan it's bundled. Paying per token? Lean on `quick`.
+
 ---
 
 ## Good to know
