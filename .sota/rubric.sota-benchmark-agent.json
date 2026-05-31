@@ -1,7 +1,7 @@
 {
   "domain": "sota-benchmark-agent",
-  "version": 2,
-  "note": "Capabilities a cited repo-vs-field benchmarking agent is expected to have. Drawn from the deep-research-agent field (gpt-researcher, storm, open_deep_research) and the grade-a-repo-against-a-rubric field (ossf/scorecard). Score the skill's SKILL.md against THIS list so coverage/tier stay comparable across runs. v2: parallel-fanout sharpened to parallel-comparator-fanout (workflow-layer concurrent comparator analysis) and marked met after the sota-scan-fanout Workflow was built and smoke-tested green.",
+  "version": 3,
+  "note": "Capabilities a cited repo-vs-field benchmarking agent is expected to have. Drawn from the deep-research-agent field (gpt-researcher, bytedance/deer-flow, langchain open/local deep-research, stanford storm) and the grade-a-repo field (ossf/scorecard), plus the same-modality Claude Code skill debba/gaphunter-skill. Score the skill's SKILL.md against THIS list so coverage/tier stay comparable across runs. v3 (2026-05-31): added edge capability shareable-report-export after the field refresh surfaced standalone report export in the deep-research half (gpt-researcher PDF/Docx/MD) and HTML reports in the same-modality GapHunter skill; sota-scan does not yet emit a standalone shareable report file. Table-stakes list unchanged from v2.",
   "capabilities": [
     { "id": "web-retrieval",        "tier": "table-stakes", "test": "multi-source web + GitHub retrieval (WebSearch/WebFetch/gh)" },
     { "id": "cited-grounding",      "tier": "table-stakes", "test": "every claim tied to a real source; no-source-no-claim rule" },
@@ -11,6 +11,7 @@
     { "id": "deterministic-rubric", "tier": "table-stakes", "test": "score against a saved per-domain capability list" },
     { "id": "reproducible-rerun",   "tier": "table-stakes", "test": "persist run to .sota/last-scan.json + diff against prior" },
     { "id": "parallel-comparator-fanout", "tier": "edge",   "test": "exhaustive mode can fetch and analyze multiple comparators concurrently through a workflow layer" },
-    { "id": "machine-readable",     "tier": "edge",         "test": "emit the capability matrix as structured JSON" }
+    { "id": "machine-readable",     "tier": "edge",         "test": "emit the capability matrix as structured JSON" },
+    { "id": "shareable-report-export", "tier": "edge",      "test": "emit a standalone shareable report file (Markdown/HTML/PDF) beyond the terminal dashboard + machine JSON" }
   ]
 }
