@@ -16,6 +16,8 @@ Every gap points to a real project that already does it. No vague advice. No flu
 
 🪞 **An honest mirror.** Where you really stand.
 
+🎯 **A fair fight.** It sorts projects by approach. It compares you to your real peers. Not a random pile. Borrowed ideas from other styles are marked optional, never counted against you.
+
 🧾 **Receipts, not opinions.** Every gap names a real project.
 
 ✅ **A real to-do list.** Ranked. Worst first. With a next step.
