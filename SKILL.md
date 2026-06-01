@@ -27,11 +27,11 @@ Pick a mode before Step 1 and **state which mode you're running in one line** at
 
 A prompt runs sequentially: in `quick`/`standard` you fetch comparators one at a time, which is fine at 3–10. At 10+ that serial fetch is the bottleneck. So `exhaustive` mode **hands the fan-out to the `sota-scan-fanout` Workflow**, which analyzes every comparator concurrently. The split is deliberate — discovery stays here, parallel analysis goes there, persistence comes back here:
 
-1. **Discover inline (Step 1).** Run the saturation loop yourself — discovery is iterative (each round's queries depend on the last), so it doesn't parallelize. Produce the comparator list `[{repo, url, type}]`.
-2. **Build the Us inventory inline (Step 0)** as `[{id, name, status, file}]`.
-3. **Call the Workflow**, passing both plus any saved rubric:
-   `Workflow({ name: "sota-scan-fanout", args: { domain, comparators, rubric: <saved or null>, us: <inventory> } })`
-   It fans out one agent per comparator (each returning a structured capability record), then synthesizes and **returns** `{ field, rubric, matrix, coverage, tier, gaps_total, gaps }`.
+1. **Discover inline (Step 1).** Run the saturation loop yourself — discovery is iterative (each round's queries depend on the last), so it doesn't parallelize. Produce a **broad candidate pool** `[{repo, url, type}]` — aim for **50+** when the domain supports it, since the workflow clusters them into peer groups.
+2. **Build the Us inventory inline (Step 0)** as `[{id, name, status, file}]`, and a one-object **Us profile** `{primary_domain, methodology, target_user, feature_categories:[…], cluster_label}` (Step 1.5) so the workflow can classify our repo into a cluster.
+3. **Call the Workflow**, passing both plus any saved rubric and today's date:
+   `Workflow({ name: "sota-scan-fanout", args: { domain, comparators, rubric: <saved or null>, us: <inventory>, us_profile: <profile or null>, now: "<today>" } })`
+   It **profiles** every candidate (rich metadata + capabilities), **clusters** them into peer groups deterministically (`lib/cluster.mjs`), **classifies** our repo into the closest cluster, picks **direct vs. reference** repos, then synthesizes and **returns** `{ domain, clusters, user_cluster, selection, selection_explanation, field, rubric, matrix, coverage, tier, gaps_total, gaps:{direct_peer, maturity, onboarding, cross_cluster} }`.
 4. **You persist and render (Step 4 + output shape).** The Workflow has **no filesystem access** — it returns data, it never writes. Take its return value, write `.sota/rubric.<domain>.json` and `.sota/last-scan.json` (or the read-only fallback), diff against the prior scan, and render the dashboard. All persistence logic lives here in exactly one place, so read-only handling is identical across modes.
 
 If the Workflow tool is unavailable (e.g. headless run), fall back to a sequential `exhaustive` scan inline and disclose that the fan-out was skipped.
@@ -74,6 +74,26 @@ Cast wide enough to cover the domain's table-stakes, not just the first repo you
 
 **Search to saturation, not to a fixed count.** One pass over the first 5–10 hits can miss the actual SOTA leader and anchor the whole matrix on the wrong field. Keep searching — vary the query angle (by capability, by competitor name, by "X alternatives", by the academic/term-of-art name) — until **two consecutive rounds surface no new comparator and no new table-stakes capability.** Only then is the field mapped. If you stop early for cost, say so in one line rather than implying the field is complete.
 
+**For broad domains, cast a wide candidate POOL, not a shortlist.** When the domain is broad (e.g. "context management", "auth", "observability", "agent frameworks", "scraping", "ETL", "databases", "UI libraries"), the best-known repos often represent *different approaches* that are not fair peers — fuzzy file search vs. vector database vs. knowledge graph all live under "context management." Gather a **broad pool (aim for 50+ when the domain supports it)** so Step 1.5 can cluster them; you'll benchmark mostly within one cluster, not against the whole undifferentiated set.
+
+## Step 1.5 — Cluster the field into peer groups, then place us
+
+**The core fairness move.** A focused repo must not be penalized for lacking features that belong to a *different* methodology in the same broad space. So before scoring, split the pool into clusters and find which one we actually belong to.
+
+The deterministic contract lives in **`lib/cluster.mjs`** (and is inlined into the `sota-scan-fanout` workflow). In `exhaustive` mode the workflow runs this for you. In `quick`/`standard` mode you do it inline, by hand, following the same shape:
+
+1. **Profile each candidate** — extract: `repo`, `url`, short `description`, `readme_summary`, `primary_domain`, **`methodology`/architecture**, `target_user`, **`feature_categories`** (3–6 tags), and maturity signals (`stars`, last commit, docs, tests, examples, releases).
+2. **Assign a `cluster_label`** — a **broad methodology FAMILY** in kebab-case (e.g. `fuzzy-file-search`, `vector-database`, `classic-knowledge-graph`, `deep-research-agent`). Pick the *most generic family that fits* (1–3 words), based on **how it works** — repos sharing a methodology must share the label even if their stacks differ. Avoid hyper-specific per-repo labels (`langgraph-super-agent-harness`); they fragment the field. (In `exhaustive` mode the candidates are profiled in parallel with no shared view, so this discipline matters most there — coarse families cluster, bespoke labels don't.)
+3. **Cluster** by grouping equal/synonymous labels (group by label; absorb a stray 1–2 member label into the canonical cluster whose feature tokens contain it).
+4. **Classify us** into the closest cluster — by matching our own `cluster_label`, else by methodology/feature-tag overlap. Record a confidence and the reason.
+5. **Select comparators**: **direct** = members of our cluster (ranked by maturity); **broader references** = the top 1–2 of each *other* cluster; everything else is **excluded** background. This is what the matrix and table-stakes gaps are scored against.
+6. **Degrade gracefully.** Fewer than ~50 repos, a thin pool, or no confident cluster → fall back to one flat peer group ranked by maturity, and **say so** ("no distinct peer cluster — compared against the whole field"). Never block on the 50 target.
+
+The output must keep three claims distinct and never conflate them:
+- **"Your direct peers usually have this"** → a real, mandatory gap (direct-peer / maturity / onboarding section).
+- **"Top projects in the broader space have this"** → context, not necessarily a gap for *you*.
+- **"This is a strategic idea borrowed from another cluster"** → optional cross-cluster inspiration, **never** a mandatory missing feature.
+
 ## Step 2 — Build the capability matrix
 
 ### Field framing (required, render before the matrix)
@@ -83,14 +103,18 @@ The highest-risk failure mode is benchmarking the repo against the *wrong kind o
 ```
 ### Field framing
 Detected domain:           <domain>
+Detected cluster:          <our peer cluster> (confidence <high/med/low>) — <one-line why>
+Clusters found:            <clusterA (n)>, <clusterB (n)>, … 
+Direct comparators:        <owner/repo, owner/repo, …>  (same cluster — what we're scored against)
+Broader references:        <owner/repo [clusterB], …>   (other clusters — context, not gaps)
 Adjacent domains considered: <domain A>, <domain B>
 Excluded domains:          <domain C> — <why it's out of scope>
 Benchmark assumption:      <one sentence the whole matrix rests on>
 ```
 
-If the repo genuinely straddles fields, name each detected domain rather than forcing one.
+If the repo genuinely straddles fields, name each detected domain rather than forcing one. **The matrix is scored against the DIRECT cluster** — capabilities that only exist in other clusters are cross-cluster ideas (Step 3), not matrix rows.
 
-Produce one table. Rows = capabilities the field expects (derived from Step 1, not invented). Columns:
+Produce one table. Rows = capabilities **our direct cluster** expects (derived from Step 1.5's direct comparators, not invented). Columns:
 
 | Capability | Us | SOTA (who has it) | Gap? | Reference |
 |---|---|---|---|---|
@@ -118,7 +142,16 @@ The capability *list* — not the per-run scores — is what must stay stable so
 
 ## Step 3 — Rank the gaps as an actionable to-do list
 
-The user must be able to act in the next five minutes. Lead with the action, make every gap a copyable task. Each gap is rendered as a card:
+**Split gaps into four sections — never present them as one flat list.** The clustering in Step 1.5 exists so the gap list is fair; honor it here:
+
+1. **Direct peer gaps** — capabilities our *same-cluster* peers have that we lack. These are the real, mandatory gaps. `[!]` table-stakes first.
+2. **Maturity / quality gaps** — tests, CI, releases, coverage. Quality of the project, not features.
+3. **Documentation / onboarding gaps** — docs, examples, quickstart, getting-started UX.
+4. **Optional cross-cluster ideas** — a capability that lives in *another* cluster, surfaced as strategic inspiration. **Mark these "optional / strategic," never as missing table-stakes**, and name the source cluster ("borrowed from the vector-database cluster"). They do **not** count toward the coverage %, the tier, or `gaps_total`.
+
+Only sections 1–3 (table-stakes within them) drive the tier. A cross-cluster idea is never a reason to call the repo "BEHIND."
+
+Each gap is rendered as a card:
 
 ```
 [!]  #1  <Capability>            table-stakes · effort ~Xd · gap: high · impl: medium
@@ -166,6 +199,7 @@ A benchmark you can't re-run and compare can't show progress. After building the
 - **Every "Us" claim is grounded in a repo file.**
 - **Every gap is tied to both repo evidence and external evidence.**
 - **Stay inside the repo's stated goal.** Don't recommend pivoting the product; recommend closing gaps within what it already aims to be.
+- **Cluster broad fields before scoring.** Don't benchmark a focused repo against an undifferentiated set of different methodologies. Score against the repo's own cluster; cross-cluster differences are optional ideas, not gaps. (Degrade to one flat group only when the pool is too thin, and disclose it.)
 - If web/git access is unavailable, say so plainly and stop — do not fabricate the field from memory.
 
 ### Quality checks (raise the grade; degrade gracefully and disclose if skipped)
@@ -187,17 +221,19 @@ Run this pass on your own draft. Treat the two groups differently: a failed **bl
 2. **Every gap is verified on both sides** — confirm against a primary source that the competitor *actually has* it **and** that we *actually lack* it; re-read the one source that proves it. Drop or mark "unverified" otherwise. **No table-stakes gap rests on a README marketing claim alone** when code/docs could verify it.
 3. **Every ✅/⚠️/❌ in the "Us" column names the repo file** that backs it (you read us before reading them).
 4. **No gap without a cited source**, and nothing recommends pivoting outside the repo's stated goal.
-5. **Field framing is rendered before the matrix** (detected / adjacent / excluded / assumption) — the wrong field invalidates everything below it.
+5. **Field framing is rendered before the matrix** (detected / **cluster** / adjacent / excluded / assumption) — the wrong field invalidates everything below it.
+6. **For a broad domain, the field is clustered and the matrix is scored against OUR cluster** — cross-cluster differences appear only as *optional/strategic* ideas, never as mandatory table-stakes gaps, and never count toward coverage/tier. (If the pool was too thin to cluster, that's disclosed.)
 
 ### Quality checks — disclose if skipped or only partially satisfied
 
-6. **The execution mode is stated**, and its comparator/saturation budget was honored — searched to saturation for `standard`/`exhaustive`, or early stop disclosed for `quick`.
-7. **Every star/recency figure has a source** — exact via `gh`, or marked `~` if web-scraped; stale/archived comparators flagged, not treated as the bar.
-8. **Scored against the saved rubric** if one exists (axis didn't drift); a new/bumped rubric version is disclosed.
-9. **Coverage math checks out:** bar is 10 segments, fill = round(pct/10), label shows real `met/total`; **tier matches the gap count** and the true total is shown even if cards are capped at 5.
-10. **The run was persisted** to `.sota/last-scan.json` — written *once, after* all `gh`/web calls returned — with a "Since last scan" line (or baseline note); or, if read-only, rendered as copyable JSON marked "not written."
-11. **Each leaderboard row has a comparator type**, and inclusion is justified by type — not stars alone.
-12. **Every gap card carries both confidence axes** (`gap:` and `impl:`), the #1 task names a concrete file + function/command/test (patch-oriented, not directional), and **no unverified external API is prescribed as the settled patch** — where the integration path is unconfirmed, `impl:` is below high, a `needs-verification:` note names the open question, and Step 1 offers options rather than one over-specific call.
+7. **The execution mode is stated**, and its comparator/saturation budget was honored — searched to saturation for `standard`/`exhaustive`, or early stop disclosed for `quick`.
+8. **Every star/recency figure has a source** — exact via `gh`, or marked `~` if web-scraped; stale/archived comparators flagged, not treated as the bar.
+9. **Scored against the saved rubric** if one exists (axis didn't drift); a new/bumped rubric version is disclosed.
+10. **Coverage math checks out:** bar is 10 segments, fill = round(pct/10), label shows real `met/total`; **tier matches the gap count** and the true total is shown even if cards are capped at 5.
+11. **The run was persisted** to `.sota/last-scan.json` — written *once, after* all `gh`/web calls returned — with a "Since last scan" line (or baseline note); or, if read-only, rendered as copyable JSON marked "not written."
+12. **Each leaderboard row has a comparator type**, and inclusion is justified by type — not stars alone.
+13. **Every gap card carries both confidence axes** (`gap:` and `impl:`), the #1 task names a concrete file + function/command/test (patch-oriented, not directional), and **no unverified external API is prescribed as the settled patch** — where the integration path is unconfirmed, `impl:` is below high, a `needs-verification:` note names the open question, and Step 1 offers options rather than one over-specific call.
+14. **The benchmark-selection audit trail is shown** (clusters found · direct comparators · broader references · excluded) so the user can challenge *why* these repos were the comparison set; gaps are split into the four sections (direct-peer / maturity / onboarding / cross-cluster).
 
 ## Output shape — action-first dashboard
 
@@ -211,20 +247,30 @@ Render in this exact order. The user reads top-down and must hit the *single nex
 > **Since last scan:** <coverage Δ · tier change · newly met/lost · field added/dropped> — OR "baseline — no prior scan to diff."
 
 ### Field framing
-Detected domain: <domain>  ·  Adjacent considered: <A>, <B>  ·  Excluded: <C> — <reason>
+Detected domain: <domain>  ·  Detected cluster: <our cluster> (conf <h/m/l>)  ·  Adjacent considered: <A>, <B>  ·  Excluded: <C> — <reason>
 Benchmark assumption: <one sentence>
 
+### 🧩 Why these benchmarks  (audit trail — so the user can challenge the comparison)
+Clusters found: <clusterA (n)>, <clusterB (n)>, …
+Direct comparators (same cluster): <owner/repo, …>  — what the matrix is scored against.
+Broader references (other clusters): <owner/repo [cluster], …>  — context only.
+Excluded: <N repos in other clusters / stale> — background, not direct peers.
+> If no distinct cluster formed: "Field too thin / one methodology — compared against the whole field by maturity."
+
 ### ▶ Do this next
-> **<the #1 gap as one imperative line>** — take the UX from `owner/repo → file` (inspiration, not a verified call). First step: create/edit `<file>`, add `<function/command/test>`; if the integration path is unverified, list the options and what to confirm first. Effort ~Xd · gap: <high/medium/low> · impl: <high/medium/low>.
+> **<the #1 direct-peer gap as one imperative line>** — take the UX from `owner/repo → file` (inspiration, not a verified call). First step: create/edit `<file>`, add `<function/command/test>`; if the integration path is unverified, list the options and what to confirm first. Effort ~Xd · gap: <high/medium/low> · impl: <high/medium/low>.
 
 ### 🏆 The field
-<leaderboard: rank · owner/repo · type (canonical/popular/technically advanced/niche-relevant/stale-reference) · stars · why included — top 5, each linked>
+<leaderboard of DIRECT comparators: rank · owner/repo · type · stars · why included — top 5, each linked. Broader references listed separately, tagged with their cluster.>
 
-### 📊 Capability matrix
+### 📊 Capability matrix  (scored against the direct cluster)
 <Step 2 table>
 
 ### 🔧 Gaps — your to-do list, worst first
-<Step 3 gap cards, each with a confidence label>
+**Direct peer gaps** — <Step 3 cards `[!]`/`[~]`, each with confidence labels>
+**Maturity / quality gaps** — <cards: tests, CI, releases>
+**Docs / onboarding gaps** — <cards: docs, examples, quickstart>
+**Optional cross-cluster ideas** (strategic, not missing features) — <one-liners: "borrowed from <cluster>: <idea> — <why it might matter>". Omit the section entirely if there are none.>
 
 ### What we already match
 <one compact line listing the ✅ capabilities, so the user sees their strengths without scrolling a table>
