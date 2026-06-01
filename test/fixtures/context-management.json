@@ -1,0 +1,1089 @@
+{
+  "domain": "context-management",
+  "now": "2026-06-01",
+  "user_repo": {
+    "repo": "merlijnw/snipfind",
+    "url": "https://github.com/merlijnw/snipfind",
+    "description": "A tiny, fast fuzzy file finder for the terminal",
+    "readme_summary": "snipfind is a minimal command-line fuzzy finder that filters file paths and lines as you type. It focuses on speed and a small binary, with interactive selection and ranked results. No indexing, embeddings, or external services.",
+    "primary_domain": "context-management",
+    "methodology": "incremental fuzzy substring matching over filenames with a scoring heuristic for ranking",
+    "target_user": "CLI power users",
+    "feature_categories": ["fuzzy-matching", "file-search", "cli", "ranking", "interactive-filter"],
+    "cluster_label": "fuzzy-file-search",
+    "maturity": {
+      "stars": 812,
+      "last_commit": "2026-05-12",
+      "has_docs": true,
+      "has_tests": true,
+      "has_examples": true,
+      "releases": true
+    }
+  },
+  "candidates": [
+    {
+      "repo": "junegunn/fzf",
+      "url": "https://github.com/junegunn/fzf",
+      "description": "A command-line fuzzy finder",
+      "readme_summary": "fzf is a general-purpose command-line fuzzy finder that lets you interactively filter any list of items. It integrates with shells, editors, and pipelines for fast fuzzy selection.",
+      "primary_domain": "context-management",
+      "methodology": "fuzzy substring matching with smart-case scoring over arbitrary input streams",
+      "target_user": "CLI power users",
+      "feature_categories": ["fuzzy-matching", "file-search", "cli", "interactive-filter", "ranking"],
+      "cluster_label": "fuzzy-file-search",
+      "maturity": {
+        "stars": 64200,
+        "last_commit": "2026-05-20",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "BurntSushi/ripgrep",
+      "url": "https://github.com/BurntSushi/ripgrep",
+      "description": "Recursively search directories for a regex pattern, fast",
+      "readme_summary": "ripgrep recursively searches the current directory for lines matching a pattern while respecting gitignore rules. It is optimized for speed using parallelism and clever literal optimizations.",
+      "primary_domain": "context-management",
+      "methodology": "regex and literal substring search over file contents with gitignore-aware traversal",
+      "target_user": "developers",
+      "feature_categories": ["file-search", "cli", "ranking", "fuzzy-matching"],
+      "cluster_label": "fuzzy-file-search",
+      "maturity": {
+        "stars": 49100,
+        "last_commit": "2026-04-28",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "sharkdp/fd",
+      "url": "https://github.com/sharkdp/fd",
+      "description": "A simple, fast and user-friendly alternative to find",
+      "readme_summary": "fd is a program to find entries in your filesystem with a convenient syntax and sensible defaults. It supports fuzzy-ish substring and regex matching with fast parallel traversal.",
+      "primary_domain": "context-management",
+      "methodology": "substring and regex file-path matching with parallel directory walking",
+      "target_user": "CLI power users",
+      "feature_categories": ["file-search", "cli", "fuzzy-matching", "ranking"],
+      "cluster_label": "fuzzy-file-search",
+      "maturity": {
+        "stars": 35400,
+        "last_commit": "2026-05-02",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "ggreer/the_silver_searcher",
+      "url": "https://github.com/ggreer/the_silver_searcher",
+      "description": "A code-searching tool similar to ack, but faster",
+      "readme_summary": "The Silver Searcher (ag) searches code quickly while ignoring files specified by .gitignore. It is designed for fast interactive code search from the command line.",
+      "primary_domain": "context-management",
+      "methodology": "literal and regex substring search over source trees with ignore-file filtering",
+      "target_user": "developers",
+      "feature_categories": ["file-search", "cli", "fuzzy-matching"],
+      "cluster_label": "fuzzy-file-search",
+      "maturity": {
+        "stars": 26300,
+        "last_commit": "2025-09-14",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": false,
+        "releases": true
+      }
+    },
+    {
+      "repo": "nvim-telescope/telescope.nvim",
+      "url": "https://github.com/nvim-telescope/telescope.nvim",
+      "description": "Find, filter, preview, pick — fuzzy finder for Neovim",
+      "readme_summary": "Telescope is a highly extendable fuzzy finder over lists for Neovim. It provides interactive filtering and preview of files, buffers, and grep results.",
+      "primary_domain": "context-management",
+      "methodology": "fuzzy matching over candidate lists with a sorter and interactive picker UI",
+      "target_user": "Neovim users",
+      "feature_categories": ["fuzzy-matching", "file-search", "interactive-filter", "ranking"],
+      "cluster_label": "fuzzy-file-search",
+      "maturity": {
+        "stars": 16800,
+        "last_commit": "2026-05-18",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": false
+      }
+    },
+    {
+      "repo": "lotabout/skim",
+      "url": "https://github.com/lotabout/skim",
+      "description": "Fuzzy finder in Rust",
+      "readme_summary": "skim is a general fuzzy finder written in Rust that can be used as a library or a standalone tool. It offers interactive filtering over arbitrary streams with ranked results.",
+      "primary_domain": "context-management",
+      "methodology": "fuzzy substring scoring over input streams with an interactive selection loop",
+      "target_user": "CLI power users",
+      "feature_categories": ["fuzzy-matching", "file-search", "cli", "interactive-filter", "ranking"],
+      "cluster_label": "fuzzy-file-search",
+      "maturity": {
+        "stars": 5200,
+        "last_commit": "2026-03-30",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "garybernhardt/selecta",
+      "url": "https://github.com/garybernhardt/selecta",
+      "description": "A fuzzy text selector for files and anything else",
+      "readme_summary": "Selecta is a small fuzzy text selector you pipe lists into and interactively narrow down. It is intentionally tiny and unix-pipe friendly.",
+      "primary_domain": "context-management",
+      "methodology": "fuzzy substring matching over piped input with a minimal interactive selector",
+      "target_user": "CLI power users",
+      "feature_categories": ["fuzzy-matching", "cli", "interactive-filter", "file-search"],
+      "cluster_label": "fuzzy-file-search",
+      "maturity": {
+        "stars": 3500,
+        "last_commit": "2024-11-22",
+        "has_docs": true,
+        "has_tests": false,
+        "has_examples": true,
+        "releases": false
+      }
+    },
+    {
+      "repo": "jhawthorn/fzy",
+      "url": "https://github.com/jhawthorn/fzy",
+      "description": "A better fuzzy finder",
+      "readme_summary": "fzy is a fast fuzzy text selector for the terminal with an advanced scoring algorithm. It reads a list on stdin and returns the selected item.",
+      "primary_domain": "context-management",
+      "methodology": "fuzzy substring matching with a contiguity-aware scoring algorithm for ranking",
+      "target_user": "CLI power users",
+      "feature_categories": ["fuzzy-matching", "cli", "ranking", "interactive-filter"],
+      "cluster_label": "fuzzy-file-search",
+      "maturity": {
+        "stars": 4400,
+        "last_commit": "2025-01-09",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": false,
+        "releases": true
+      }
+    },
+    {
+      "repo": "peltoche/peco",
+      "url": "https://github.com/peltoche/peco",
+      "description": "Simplistic interactive filtering tool",
+      "readme_summary": "peco is a simple interactive filtering tool that takes lines on stdin and lets you fuzzily narrow them down. It is commonly used to build interactive command-line workflows.",
+      "primary_domain": "context-management",
+      "methodology": "incremental fuzzy filtering over input lines with an interactive selector",
+      "target_user": "CLI power users",
+      "feature_categories": ["fuzzy-matching", "cli", "interactive-filter", "file-search"],
+      "cluster_label": "fuzzy-file-search",
+      "maturity": {
+        "stars": 6300,
+        "last_commit": "2024-08-17",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "Genivia/ugrep",
+      "url": "https://github.com/Genivia/ugrep",
+      "description": "Ultra fast grep with interactive query UI",
+      "readme_summary": "ugrep is a fast file searcher with an interactive fuzzy query interface and boolean search. It searches file contents and names across large trees quickly.",
+      "primary_domain": "context-management",
+      "methodology": "regex and fuzzy substring search over file contents with an interactive TUI",
+      "target_user": "developers",
+      "feature_categories": ["file-search", "cli", "fuzzy-matching", "interactive-filter", "ranking"],
+      "cluster_label": "fuzzy-file-search",
+      "maturity": {
+        "stars": 2800,
+        "last_commit": "2026-04-11",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "mooz/percol",
+      "url": "https://github.com/mooz/percol",
+      "description": "Adds flavor of interactive filtering to the traditional pipe",
+      "readme_summary": "percol adds interactive incremental fuzzy filtering to traditional unix pipes. It lets users select lines interactively from any command output.",
+      "primary_domain": "context-management",
+      "methodology": "interactive incremental fuzzy filtering over piped command output",
+      "target_user": "CLI power users",
+      "feature_categories": ["fuzzy-matching", "cli", "interactive-filter"],
+      "cluster_label": "fuzzy-file-search",
+      "maturity": {
+        "stars": 3300,
+        "last_commit": "2023-12-01",
+        "has_docs": true,
+        "has_tests": false,
+        "has_examples": true,
+        "releases": false
+      }
+    },
+    {
+      "repo": "ekalinin/pathpicker-lite",
+      "url": "https://github.com/ekalinin/pathpicker-lite",
+      "description": "Pick file paths out of any text with fuzzy selection",
+      "readme_summary": "pathpicker-lite parses file paths out of arbitrary text and lets you fuzzily select among them. It is aimed at quickly opening files referenced in build output or logs.",
+      "primary_domain": "context-management",
+      "methodology": "path extraction plus fuzzy substring ranking over detected file references",
+      "target_user": "developers",
+      "feature_categories": ["file-search", "fuzzy-matching", "cli", "ranking"],
+      "cluster_label": "fuzzy-file-search",
+      "maturity": {
+        "stars": 640,
+        "last_commit": "2025-06-19",
+        "has_docs": false,
+        "has_tests": false,
+        "has_examples": false,
+        "releases": false
+      }
+    },
+    {
+      "repo": "ajeetdsouza/zoxide",
+      "url": "https://github.com/ajeetdsouza/zoxide",
+      "description": "A smarter cd command with fuzzy directory jumping",
+      "readme_summary": "zoxide lets you jump to frequently used directories using fuzzy substring matching and a frecency ranking. It learns your habits and ranks directory candidates accordingly.",
+      "primary_domain": "context-management",
+      "methodology": "fuzzy substring matching over a frecency-ranked directory database",
+      "target_user": "CLI power users",
+      "feature_categories": ["fuzzy-matching", "cli", "ranking", "file-search"],
+      "cluster_label": "fuzzy-file-search",
+      "maturity": {
+        "stars": 22100,
+        "last_commit": "2026-04-30",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "knqyf263/pet-find",
+      "url": "https://github.com/knqyf263/pet-find",
+      "description": "Tiny interactive fuzzy picker for snippets and files",
+      "readme_summary": "pet-find is a small interactive fuzzy picker that filters snippets and file paths as you type. It is built to be embedded in larger shell workflows.",
+      "primary_domain": "context-management",
+      "methodology": "incremental fuzzy filtering over snippet and file lists with interactive selection",
+      "target_user": "CLI power users",
+      "feature_categories": ["fuzzy-matching", "interactive-filter", "cli", "file-search"],
+      "cluster_label": "fuzzy-finder",
+      "maturity": {
+        "stars": 980,
+        "last_commit": "2026-02-15",
+        "has_docs": true,
+        "has_tests": false,
+        "has_examples": true,
+        "releases": false
+      }
+    },
+    {
+      "repo": "neo4j/neo4j",
+      "url": "https://github.com/neo4j/neo4j",
+      "description": "Graphs for Everyone — the world's leading graph database",
+      "readme_summary": "Neo4j is a native property-graph database for connected data, supporting Cypher queries over nodes and relationships. It models entities and their relations as a first-class graph.",
+      "primary_domain": "context-management",
+      "methodology": "property-graph storage and traversal with Cypher query over entity-relationship structures",
+      "target_user": "data engineers",
+      "feature_categories": ["graph-database", "entity-relations", "triples", "ontology"],
+      "cluster_label": "classic-knowledge-graph",
+      "maturity": {
+        "stars": 13600,
+        "last_commit": "2026-05-21",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "RDFLib/rdflib",
+      "url": "https://github.com/RDFLib/rdflib",
+      "description": "RDFLib is a Python library for working with RDF",
+      "readme_summary": "RDFLib is a pure-Python package for working with RDF triples, including parsers, serializers, and a SPARQL engine. It supports graph stores and ontology-aware querying.",
+      "primary_domain": "context-management",
+      "methodology": "RDF triple store with SPARQL querying over subject-predicate-object statements",
+      "target_user": "semantic-web developers",
+      "feature_categories": ["triples", "sparql", "ontology", "graph-database", "entity-relations"],
+      "cluster_label": "classic-knowledge-graph",
+      "maturity": {
+        "stars": 2300,
+        "last_commit": "2026-04-26",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "apache/jena",
+      "url": "https://github.com/apache/jena",
+      "description": "Apache Jena — a free and open source Java framework for semantic web and linked data",
+      "readme_summary": "Apache Jena provides an API and triple store for building semantic-web and linked-data applications. It includes a SPARQL engine, RDF storage, and reasoning over ontologies.",
+      "primary_domain": "context-management",
+      "methodology": "RDF triple storage and SPARQL querying with rule-based ontology reasoning",
+      "target_user": "semantic-web developers",
+      "feature_categories": ["triples", "sparql", "ontology", "graph-database", "entity-relations"],
+      "cluster_label": "classic-knowledge-graph",
+      "maturity": {
+        "stars": 1200,
+        "last_commit": "2026-05-08",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "dgraph-io/dgraph",
+      "url": "https://github.com/dgraph-io/dgraph",
+      "description": "Distributed, fast graph database with GraphQL-like query language",
+      "readme_summary": "Dgraph is a horizontally scalable and distributed graph database designed for high throughput. It stores entities and relationships and queries them with a GraphQL-inspired language.",
+      "primary_domain": "context-management",
+      "methodology": "distributed property-graph storage with sharded entity-relationship traversal",
+      "target_user": "data engineers",
+      "feature_categories": ["graph-database", "entity-relations", "triples"],
+      "cluster_label": "classic-knowledge-graph",
+      "maturity": {
+        "stars": 20800,
+        "last_commit": "2026-03-19",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "janusgraph/janusgraph",
+      "url": "https://github.com/janusgraph/janusgraph",
+      "description": "JanusGraph: an open-source, distributed graph database",
+      "readme_summary": "JanusGraph is a scalable graph database optimized for storing and querying graphs with billions of edges. It supports the Gremlin traversal language over entity-relationship data.",
+      "primary_domain": "context-management",
+      "methodology": "distributed property-graph storage with Gremlin traversal over entity relations",
+      "target_user": "data engineers",
+      "feature_categories": ["graph-database", "entity-relations", "ontology"],
+      "cluster_label": "classic-knowledge-graph",
+      "maturity": {
+        "stars": 5500,
+        "last_commit": "2026-02-28",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "blazegraph/database",
+      "url": "https://github.com/blazegraph/database",
+      "description": "Blazegraph high-performance graph database supporting RDF/SPARQL",
+      "readme_summary": "Blazegraph is a high-performance graph database supporting RDF and SPARQL APIs. It scales to billions of triples and supports ontology-driven reasoning.",
+      "primary_domain": "context-management",
+      "methodology": "RDF triple store with SPARQL querying and high-scale ontology indexing",
+      "target_user": "semantic-web developers",
+      "feature_categories": ["triples", "sparql", "ontology", "graph-database"],
+      "cluster_label": "classic-knowledge-graph",
+      "maturity": {
+        "stars": 880,
+        "last_commit": "2023-07-10",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": false,
+        "releases": true
+      }
+    },
+    {
+      "repo": "eclipse-rdf4j/rdf4j",
+      "url": "https://github.com/eclipse-rdf4j/rdf4j",
+      "description": "Eclipse RDF4J: scalable RDF for Java",
+      "readme_summary": "Eclipse RDF4J is a Java framework for processing and handling RDF data, including triple storage and SPARQL. It provides APIs for ontology-aware semantic applications.",
+      "primary_domain": "context-management",
+      "methodology": "RDF triple storage with SPARQL endpoints and ontology inference",
+      "target_user": "semantic-web developers",
+      "feature_categories": ["triples", "sparql", "ontology", "entity-relations"],
+      "cluster_label": "classic-knowledge-graph",
+      "maturity": {
+        "stars": 380,
+        "last_commit": "2026-04-15",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "cayleygraph/cayley",
+      "url": "https://github.com/cayleygraph/cayley",
+      "description": "An open-source graph database",
+      "readme_summary": "Cayley is an open-source graph database inspired by linked-data systems. It stores triples and supports multiple query languages over entity relationships.",
+      "primary_domain": "context-management",
+      "methodology": "triple-based graph storage with multi-language traversal over entity relations",
+      "target_user": "data engineers",
+      "feature_categories": ["triples", "graph-database", "entity-relations", "sparql"],
+      "cluster_label": "classic-knowledge-graph",
+      "maturity": {
+        "stars": 14700,
+        "last_commit": "2024-05-30",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "arangodb/arangodb",
+      "url": "https://github.com/arangodb/arangodb",
+      "description": "ArangoDB — a native multi-model database with graph capabilities",
+      "readme_summary": "ArangoDB is a multi-model database supporting graph, document, and key-value data. Its graph engine queries entity-relationship structures with the AQL language.",
+      "primary_domain": "context-management",
+      "methodology": "multi-model storage with graph traversal over entity-relationship collections",
+      "target_user": "data engineers",
+      "feature_categories": ["graph-database", "entity-relations", "ontology"],
+      "cluster_label": "classic-knowledge-graph",
+      "maturity": {
+        "stars": 13700,
+        "last_commit": "2026-05-10",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "stardog-union/stardog-examples",
+      "url": "https://github.com/stardog-union/stardog-examples",
+      "description": "Examples and ontologies for the Stardog knowledge graph platform",
+      "readme_summary": "This repo collects examples, ontologies, and SPARQL queries for the Stardog knowledge graph platform. It demonstrates triple storage and reasoning over enterprise ontologies.",
+      "primary_domain": "context-management",
+      "methodology": "RDF triple modeling with SPARQL and OWL ontology reasoning examples",
+      "target_user": "semantic-web developers",
+      "feature_categories": ["triples", "sparql", "ontology", "entity-relations"],
+      "cluster_label": "classic-knowledge-graph",
+      "maturity": {
+        "stars": 420,
+        "last_commit": "2025-10-02",
+        "has_docs": true,
+        "has_tests": false,
+        "has_examples": true,
+        "releases": false
+      }
+    },
+    {
+      "repo": "ontodev/robot",
+      "url": "https://github.com/ontodev/robot",
+      "description": "ROBOT is a tool for working with OWL ontologies",
+      "readme_summary": "ROBOT is a command-line tool and library for automating ontology development tasks with OWL. It supports converting, reasoning, and validating ontologies and their entity relations.",
+      "primary_domain": "context-management",
+      "methodology": "OWL ontology manipulation and reasoning over class and entity relationships",
+      "target_user": "ontologists",
+      "feature_categories": ["ontology", "triples", "entity-relations", "sparql"],
+      "cluster_label": "classic-knowledge-graph",
+      "maturity": {
+        "stars": 720,
+        "last_commit": "2026-03-04",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "obsidianmd/obsidian-help",
+      "url": "https://github.com/obsidianmd/obsidian-help",
+      "description": "Help documentation for Obsidian, a knowledge base on local Markdown files",
+      "readme_summary": "Obsidian is a note-taking app that builds a context graph from backlinks between local Markdown files. This repo hosts its help docs covering linking, graph view, and knowledge organization.",
+      "primary_domain": "context-management",
+      "methodology": "bidirectional backlink graph construction over local Markdown notes",
+      "target_user": "knowledge workers",
+      "feature_categories": ["backlinks", "markdown", "note-linking", "knowledge-base", "wiki"],
+      "cluster_label": "document-context-graph",
+      "maturity": {
+        "stars": 3100,
+        "last_commit": "2026-05-09",
+        "has_docs": true,
+        "has_tests": false,
+        "has_examples": true,
+        "releases": false
+      }
+    },
+    {
+      "repo": "logseq/logseq",
+      "url": "https://github.com/logseq/logseq",
+      "description": "A privacy-first, open-source knowledge base",
+      "readme_summary": "Logseq is an outliner knowledge base that links blocks and pages into a queryable graph. It works on local Markdown and org-mode files with backlinks and references.",
+      "primary_domain": "context-management",
+      "methodology": "block-level backlink graph over local Markdown and org-mode documents",
+      "target_user": "knowledge workers",
+      "feature_categories": ["backlinks", "markdown", "note-linking", "knowledge-base", "wiki"],
+      "cluster_label": "document-context-graph",
+      "maturity": {
+        "stars": 35200,
+        "last_commit": "2026-04-22",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "foambubble/foam",
+      "url": "https://github.com/foambubble/foam",
+      "description": "A personal knowledge management and sharing system for VSCode",
+      "readme_summary": "Foam is a Roam-inspired personal knowledge management system built on VSCode and Markdown. It creates a graph of notes via wiki-links and backlinks.",
+      "primary_domain": "context-management",
+      "methodology": "wiki-link and backlink graph construction over Markdown notes in an editor",
+      "target_user": "knowledge workers",
+      "feature_categories": ["backlinks", "markdown", "note-linking", "knowledge-base", "wiki"],
+      "cluster_label": "document-context-graph",
+      "maturity": {
+        "stars": 16200,
+        "last_commit": "2025-12-30",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "zk-org/zk",
+      "url": "https://github.com/zk-org/zk",
+      "description": "A plain text note-taking assistant with zettelkasten features",
+      "readme_summary": "zk is a command-line tool for maintaining a Zettelkasten of plain-text Markdown notes. It manages links between notes and lets you query the resulting knowledge graph.",
+      "primary_domain": "context-management",
+      "methodology": "zettelkasten link graph over plain-text Markdown notes with query support",
+      "target_user": "knowledge workers",
+      "feature_categories": ["backlinks", "markdown", "note-linking", "knowledge-base"],
+      "cluster_label": "document-context-graph",
+      "maturity": {
+        "stars": 2400,
+        "last_commit": "2026-02-11",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "dendronhq/dendron",
+      "url": "https://github.com/dendronhq/dendron",
+      "description": "The personal knowledge management (PKM) tool that grows as you do",
+      "readme_summary": "Dendron is a hierarchical, Markdown-based knowledge management tool built on VSCode. It links and organizes notes into a navigable knowledge base with backlinks.",
+      "primary_domain": "context-management",
+      "methodology": "hierarchical note linking and backlink graphs over Markdown documents",
+      "target_user": "knowledge workers",
+      "feature_categories": ["backlinks", "markdown", "note-linking", "knowledge-base", "wiki"],
+      "cluster_label": "document-context-graph",
+      "maturity": {
+        "stars": 7400,
+        "last_commit": "2024-09-18",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "srid/neuron",
+      "url": "https://github.com/srid/neuron",
+      "description": "Future-proof note-taking and publishing based on Zettelkasten",
+      "readme_summary": "Neuron is a command-line app for managing a Zettelkasten of interlinked Markdown notes and publishing them. It generates a navigable web of backlinks between notes.",
+      "primary_domain": "context-management",
+      "methodology": "zettelkasten backlink graph generation and static publishing from Markdown",
+      "target_user": "knowledge workers",
+      "feature_categories": ["backlinks", "markdown", "note-linking", "wiki"],
+      "cluster_label": "document-context-graph",
+      "maturity": {
+        "stars": 2500,
+        "last_commit": "2023-05-25",
+        "has_docs": true,
+        "has_tests": false,
+        "has_examples": true,
+        "releases": false
+      }
+    },
+    {
+      "repo": "athensresearch/athens",
+      "url": "https://github.com/athensresearch/athens",
+      "description": "Open-source, collaborative, Roam-like networked thought tool",
+      "readme_summary": "Athens is an open-source networked-thought tool inspired by Roam Research. It links blocks and pages into a graph of knowledge with bidirectional references.",
+      "primary_domain": "context-management",
+      "methodology": "block-reference graph over documents with bidirectional links",
+      "target_user": "knowledge workers",
+      "feature_categories": ["backlinks", "note-linking", "knowledge-base", "wiki"],
+      "cluster_label": "document-context-graph",
+      "maturity": {
+        "stars": 6300,
+        "last_commit": "2023-02-14",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": false,
+        "releases": true
+      }
+    },
+    {
+      "repo": "TriliumNext/Notes",
+      "url": "https://github.com/TriliumNext/Notes",
+      "description": "Build your personal knowledge base with Trilium Notes",
+      "readme_summary": "Trilium Notes is a hierarchical note application for building large personal knowledge bases. It supports note linking, attributes, and a relationship map between notes.",
+      "primary_domain": "context-management",
+      "methodology": "hierarchical note linking with relation maps across a personal knowledge base",
+      "target_user": "knowledge workers",
+      "feature_categories": ["note-linking", "knowledge-base", "backlinks", "wiki"],
+      "cluster_label": "document-context-graph",
+      "maturity": {
+        "stars": 14900,
+        "last_commit": "2026-05-16",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "marktext/marktext",
+      "url": "https://github.com/marktext/marktext",
+      "description": "A simple and elegant Markdown editor with linking",
+      "readme_summary": "MarkText is a Markdown editor that supports note files and inter-document links. It can build a small wiki of linked Markdown notes for a personal knowledge base.",
+      "primary_domain": "context-management",
+      "methodology": "Markdown editing with inter-document link tracking for a note wiki",
+      "target_user": "knowledge workers",
+      "feature_categories": ["markdown", "note-linking", "wiki", "knowledge-base"],
+      "cluster_label": "document-context-graph",
+      "maturity": {
+        "stars": 4700,
+        "last_commit": "2024-12-03",
+        "has_docs": true,
+        "has_tests": false,
+        "has_examples": false,
+        "releases": true
+      }
+    },
+    {
+      "repo": "vanadium23/markdown-graph",
+      "url": "https://github.com/vanadium23/markdown-graph",
+      "description": "Build a backlink graph from any folder of Markdown notes",
+      "readme_summary": "markdown-graph scans a folder of Markdown files and builds a backlink graph you can browse. It is a lightweight tool for visualizing note-linking structure.",
+      "primary_domain": "context-management",
+      "methodology": "static backlink graph extraction from Markdown wiki-links",
+      "target_user": "knowledge workers",
+      "feature_categories": ["backlinks", "markdown", "note-linking", "knowledge-base"],
+      "cluster_label": "document-context-graph",
+      "maturity": {
+        "stars": 540,
+        "last_commit": "2025-08-08",
+        "has_docs": false,
+        "has_tests": false,
+        "has_examples": true,
+        "releases": false
+      }
+    },
+    {
+      "repo": "chroma-core/chroma",
+      "url": "https://github.com/chroma-core/chroma",
+      "description": "The AI-native open-source embedding database",
+      "readme_summary": "Chroma is an open-source embedding database that stores vectors and metadata for semantic search. It is designed to power retrieval-augmented generation applications.",
+      "primary_domain": "context-management",
+      "methodology": "approximate nearest-neighbor search over embedding vectors with metadata filtering",
+      "target_user": "RAG application developers",
+      "feature_categories": ["embeddings", "vector-search", "ann", "semantic-search", "rag"],
+      "cluster_label": "vector-database",
+      "maturity": {
+        "stars": 19800,
+        "last_commit": "2026-05-22",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "qdrant/qdrant",
+      "url": "https://github.com/qdrant/qdrant",
+      "description": "High-performance vector similarity search engine",
+      "readme_summary": "Qdrant is a vector similarity search engine and database with extended filtering support. It powers semantic search and recommendation over embedding vectors.",
+      "primary_domain": "context-management",
+      "methodology": "HNSW approximate nearest-neighbor search over embeddings with payload filtering",
+      "target_user": "RAG application developers",
+      "feature_categories": ["embeddings", "vector-search", "ann", "semantic-search", "rag"],
+      "cluster_label": "vector-database",
+      "maturity": {
+        "stars": 24600,
+        "last_commit": "2026-05-19",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "weaviate/weaviate",
+      "url": "https://github.com/weaviate/weaviate",
+      "description": "Weaviate is an open-source vector database",
+      "readme_summary": "Weaviate is an open-source vector database that stores objects and their embeddings for semantic search. It supports hybrid search and modules for various embedding models.",
+      "primary_domain": "context-management",
+      "methodology": "approximate nearest-neighbor vector search with optional hybrid keyword scoring",
+      "target_user": "RAG application developers",
+      "feature_categories": ["embeddings", "vector-search", "ann", "semantic-search", "rag"],
+      "cluster_label": "vector-database",
+      "maturity": {
+        "stars": 14200,
+        "last_commit": "2026-05-21",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "milvus-io/milvus",
+      "url": "https://github.com/milvus-io/milvus",
+      "description": "A cloud-native vector database for scalable similarity search",
+      "readme_summary": "Milvus is a cloud-native vector database built for scalable similarity search over billions of embeddings. It supports multiple ANN indexes and semantic retrieval workloads.",
+      "primary_domain": "context-management",
+      "methodology": "distributed approximate nearest-neighbor search over large embedding collections",
+      "target_user": "RAG application developers",
+      "feature_categories": ["embeddings", "vector-search", "ann", "semantic-search", "rag"],
+      "cluster_label": "vector-database",
+      "maturity": {
+        "stars": 30200,
+        "last_commit": "2026-05-20",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "facebookresearch/faiss",
+      "url": "https://github.com/facebookresearch/faiss",
+      "description": "A library for efficient similarity search and clustering of dense vectors",
+      "readme_summary": "FAISS is a library for efficient similarity search and clustering of dense vectors. It provides a range of ANN indexes used as the core of many vector search systems.",
+      "primary_domain": "context-management",
+      "methodology": "indexed approximate nearest-neighbor search over dense embedding vectors",
+      "target_user": "ML engineers",
+      "feature_categories": ["embeddings", "vector-search", "ann", "semantic-search"],
+      "cluster_label": "vector-database",
+      "maturity": {
+        "stars": 31500,
+        "last_commit": "2026-04-18",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "pgvector/pgvector",
+      "url": "https://github.com/pgvector/pgvector",
+      "description": "Open-source vector similarity search for Postgres",
+      "readme_summary": "pgvector adds vector similarity search to PostgreSQL with new column types and indexes. It enables semantic search and RAG retrieval directly inside a relational database.",
+      "primary_domain": "context-management",
+      "methodology": "approximate nearest-neighbor vector indexing as a Postgres extension",
+      "target_user": "RAG application developers",
+      "feature_categories": ["embeddings", "vector-search", "ann", "semantic-search", "rag"],
+      "cluster_label": "vector-database",
+      "maturity": {
+        "stars": 14800,
+        "last_commit": "2026-05-11",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "spotify/annoy",
+      "url": "https://github.com/spotify/annoy",
+      "description": "Approximate Nearest Neighbors in C++/Python optimized for memory usage",
+      "readme_summary": "Annoy is a C++ library with Python bindings for approximate nearest-neighbor search over embeddings. It is optimized for memory use and read-only static indexes.",
+      "primary_domain": "context-management",
+      "methodology": "tree-based approximate nearest-neighbor search over embedding vectors",
+      "target_user": "ML engineers",
+      "feature_categories": ["embeddings", "vector-search", "ann", "semantic-search"],
+      "cluster_label": "vector-database",
+      "maturity": {
+        "stars": 13400,
+        "last_commit": "2025-07-12",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "nmslib/hnswlib",
+      "url": "https://github.com/nmslib/hnswlib",
+      "description": "Header-only C++/python library for fast approximate nearest neighbors",
+      "readme_summary": "hnswlib is a fast header-only implementation of the HNSW algorithm for approximate nearest-neighbor search. It is widely used as the indexing core for semantic search systems.",
+      "primary_domain": "context-management",
+      "methodology": "HNSW graph-based approximate nearest-neighbor search over embeddings",
+      "target_user": "ML engineers",
+      "feature_categories": ["embeddings", "vector-search", "ann", "semantic-search"],
+      "cluster_label": "vector-database",
+      "maturity": {
+        "stars": 4600,
+        "last_commit": "2025-11-28",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "lancedb/lancedb",
+      "url": "https://github.com/lancedb/lancedb",
+      "description": "Developer-friendly, serverless vector database for AI applications",
+      "readme_summary": "LanceDB is an embedded, developer-friendly vector database for AI applications. It stores embeddings on disk and supports fast semantic search for RAG.",
+      "primary_domain": "context-management",
+      "methodology": "on-disk approximate nearest-neighbor search over embeddings with columnar storage",
+      "target_user": "RAG application developers",
+      "feature_categories": ["embeddings", "vector-search", "ann", "semantic-search", "rag"],
+      "cluster_label": "vector-database",
+      "maturity": {
+        "stars": 6800,
+        "last_commit": "2026-05-17",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "marqo-ai/marqo",
+      "url": "https://github.com/marqo-ai/marqo",
+      "description": "Unified embedding generation and search engine",
+      "readme_summary": "Marqo is an end-to-end vector search engine that handles embedding generation and storage. It provides semantic search over text and images for retrieval applications.",
+      "primary_domain": "context-management",
+      "methodology": "embedding generation plus approximate nearest-neighbor vector search",
+      "target_user": "RAG application developers",
+      "feature_categories": ["embeddings", "vector-search", "ann", "semantic-search", "rag"],
+      "cluster_label": "vector-database",
+      "maturity": {
+        "stars": 4900,
+        "last_commit": "2026-03-26",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "tensorchord/tinyvec",
+      "url": "https://github.com/tensorchord/tinyvec",
+      "description": "A minimal in-process embedding vector store",
+      "readme_summary": "tinyvec is a minimal in-process vector store for embedding similarity search. It targets small RAG prototypes that need semantic search without a server.",
+      "primary_domain": "context-management",
+      "methodology": "brute-force and ANN nearest-neighbor search over an in-memory embedding store",
+      "target_user": "RAG application developers",
+      "feature_categories": ["embeddings", "vector-search", "ann", "semantic-search", "rag"],
+      "cluster_label": "vector-db",
+      "maturity": {
+        "stars": 760,
+        "last_commit": "2026-01-20",
+        "has_docs": false,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": false
+      }
+    },
+    {
+      "repo": "deepset-ai/haystack",
+      "url": "https://github.com/deepset-ai/haystack",
+      "description": "LLM orchestration framework to build retrieval-augmented applications",
+      "readme_summary": "Haystack is an end-to-end framework for building retrieval-augmented and search applications with LLMs. It combines vector search, keyword search, and pipelines into hybrid retrieval systems.",
+      "primary_domain": "context-management",
+      "methodology": "pipeline orchestration combining dense vector retrieval with sparse keyword retrieval",
+      "target_user": "RAG application developers",
+      "feature_categories": ["hybrid-search", "retrieval", "pipeline", "orchestration", "rag"],
+      "cluster_label": "mixed-methodology",
+      "maturity": {
+        "stars": 17200,
+        "last_commit": "2026-05-21",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "run-llama/llama_index",
+      "url": "https://github.com/run-llama/llama_index",
+      "description": "Data framework for building LLM applications over external data",
+      "readme_summary": "LlamaIndex is a data framework that connects LLMs to external data via indexes, retrievers, and query engines. It combines vector, keyword, and graph retrieval in configurable pipelines.",
+      "primary_domain": "context-management",
+      "methodology": "retrieval orchestration combining vector, keyword, and graph indexes into query pipelines",
+      "target_user": "RAG application developers",
+      "feature_categories": ["hybrid-search", "retrieval", "pipeline", "orchestration", "rag"],
+      "cluster_label": "mixed-methodology",
+      "maturity": {
+        "stars": 37800,
+        "last_commit": "2026-05-22",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "langchain-ai/langchain",
+      "url": "https://github.com/langchain-ai/langchain",
+      "description": "Build context-aware reasoning applications",
+      "readme_summary": "LangChain is a framework for building context-aware LLM applications with retrieval and tools. It orchestrates vector stores, document loaders, and chains into hybrid retrieval pipelines.",
+      "primary_domain": "context-management",
+      "methodology": "chained retrieval orchestration over vector stores and other retrievers",
+      "target_user": "RAG application developers",
+      "feature_categories": ["hybrid-search", "retrieval", "pipeline", "orchestration", "rag", "multi-modal"],
+      "cluster_label": "mixed-methodology",
+      "maturity": {
+        "stars": 92400,
+        "last_commit": "2026-05-22",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "castorini/pyserini",
+      "url": "https://github.com/castorini/pyserini",
+      "description": "Reproducible information retrieval with sparse and dense representations",
+      "readme_summary": "Pyserini is a toolkit for reproducible information retrieval combining sparse and dense representations. It supports hybrid search that fuses BM25 with dense vector retrieval.",
+      "primary_domain": "context-management",
+      "methodology": "hybrid retrieval fusing BM25 sparse search with dense vector search",
+      "target_user": "IR researchers",
+      "feature_categories": ["hybrid-search", "retrieval", "pipeline", "semantic-search"],
+      "cluster_label": "mixed-methodology",
+      "maturity": {
+        "stars": 1900,
+        "last_commit": "2026-04-09",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "AmenRa/retriv",
+      "url": "https://github.com/AmenRa/retriv",
+      "description": "A Python search engine with hybrid sparse-dense retrieval",
+      "readme_summary": "retriv is a Python search engine supporting sparse, dense, and hybrid retrieval out of the box. It fuses keyword and embedding scores into a single ranked result set.",
+      "primary_domain": "context-management",
+      "methodology": "hybrid retrieval fusing sparse keyword and dense embedding rankings",
+      "target_user": "RAG application developers",
+      "feature_categories": ["hybrid-search", "retrieval", "semantic-search", "pipeline"],
+      "cluster_label": "mixed-methodology",
+      "maturity": {
+        "stars": 1300,
+        "last_commit": "2025-10-15",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "vespa-engine/vespa",
+      "url": "https://github.com/vespa-engine/vespa",
+      "description": "The open big data serving engine — store, search, rank and organize",
+      "readme_summary": "Vespa is an engine for low-latency computation over large data, combining vector, text, and structured search. It serves hybrid retrieval and ranking pipelines at scale.",
+      "primary_domain": "context-management",
+      "methodology": "hybrid serving of vector, keyword, and structured retrieval with learned ranking",
+      "target_user": "search engineers",
+      "feature_categories": ["hybrid-search", "retrieval", "pipeline", "orchestration", "semantic-search"],
+      "cluster_label": "mixed-methodology",
+      "maturity": {
+        "stars": 6100,
+        "last_commit": "2026-05-18",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "jina-ai/jina",
+      "url": "https://github.com/jina-ai/jina",
+      "description": "Build multimodal AI applications with cloud-native stack",
+      "readme_summary": "Jina is a framework for building multimodal AI and neural search applications. It orchestrates embedding, indexing, and retrieval across text, image, and audio modalities.",
+      "primary_domain": "context-management",
+      "methodology": "multimodal neural search pipelines combining embeddings and retrieval orchestration",
+      "target_user": "RAG application developers",
+      "feature_categories": ["hybrid-search", "retrieval", "pipeline", "multi-modal", "orchestration"],
+      "cluster_label": "mixed-methodology",
+      "maturity": {
+        "stars": 20900,
+        "last_commit": "2026-02-25",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "neuml/txtai",
+      "url": "https://github.com/neuml/txtai",
+      "description": "All-in-one embeddings database for semantic search and RAG",
+      "readme_summary": "txtai is an all-in-one embeddings database for semantic search, LLM orchestration, and workflows. It combines vector search with keyword and graph components into hybrid pipelines.",
+      "primary_domain": "context-management",
+      "methodology": "hybrid embeddings-plus-keyword retrieval with workflow orchestration",
+      "target_user": "RAG application developers",
+      "feature_categories": ["hybrid-search", "retrieval", "pipeline", "orchestration", "rag"],
+      "cluster_label": "mixed-methodology",
+      "maturity": {
+        "stars": 9700,
+        "last_commit": "2026-05-13",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": true,
+        "releases": true
+      }
+    },
+    {
+      "repo": "AmenRa/ranx-fusion",
+      "url": "https://github.com/AmenRa/ranx-fusion",
+      "description": "Rank fusion and hybrid retrieval evaluation toolkit",
+      "readme_summary": "ranx-fusion provides rank-fusion methods for combining multiple retrieval systems into one ranking. It is used to build and evaluate hybrid sparse-dense retrieval pipelines.",
+      "primary_domain": "context-management",
+      "methodology": "rank fusion of multiple retrievers to produce a single hybrid ranked list",
+      "target_user": "IR researchers",
+      "feature_categories": ["hybrid-search", "retrieval", "pipeline"],
+      "cluster_label": "mixed-methodology",
+      "maturity": {
+        "stars": 480,
+        "last_commit": "2025-09-29",
+        "has_docs": true,
+        "has_tests": true,
+        "has_examples": false,
+        "releases": false
+      }
+    },
+    {
+      "repo": "context-labs/ragstack-hybrid",
+      "url": "https://github.com/context-labs/ragstack-hybrid",
+      "description": "A hybrid RAG stack combining vectors, keywords and a knowledge graph",
+      "readme_summary": "ragstack-hybrid is a reference RAG stack that fuses vector search, BM25, and a knowledge graph for context retrieval. It orchestrates the three retrievers into a single pipeline.",
+      "primary_domain": "context-management",
+      "methodology": "multi-retriever orchestration fusing vector, keyword, and graph context sources",
+      "target_user": "RAG application developers",
+      "feature_categories": ["hybrid-search", "retrieval", "pipeline", "orchestration", "multi-modal"],
+      "cluster_label": "mixed-methodology",
+      "maturity": {
+        "stars": 690,
+        "last_commit": "2026-04-02",
+        "has_docs": true,
+        "has_tests": false,
+        "has_examples": true,
+        "releases": false
+      }
+    }
+  ]
+}
