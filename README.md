@@ -49,6 +49,7 @@ Every gap points to a real project that already does it. No vague advice. No flu
 It's an add-on for [Claude Code](https://claude.com/claude-code). Copy two files in:
 
 **Mac / Linux**
+
 ```bash
 mkdir -p ~/.claude/skills/sota-scan ~/.claude/workflows
 cp SKILL.md ~/.claude/skills/sota-scan/
@@ -56,6 +57,7 @@ cp workflows/sota-scan-fanout.js ~/.claude/workflows/
 ```
 
 **Windows**
+
 ```powershell
 New-Item -ItemType Directory -Force ~/.claude/skills/sota-scan, ~/.claude/workflows | Out-Null
 Copy-Item SKILL.md ~/.claude/skills/sota-scan/
@@ -70,8 +72,8 @@ Open Claude Code in any project. Say:
 
 Or just ask:
 
-- *"Is my project top-tier?"*
-- *"What am I missing vs the best?"*
+- _"Is my project top-tier?"_
+- _"What am I missing vs the best?"_
 
 Done. It does the rest.
 
@@ -79,10 +81,10 @@ Done. It does the rest.
 
 ## How deep?
 
-| Say | You get | For |
-|---|---|---|
-| `/sota-scan quick` | top 3 gaps | a fast check |
-| `/sota-scan` | full scorecard | everyday use |
+| Say                     | You get          | For                     |
+| ----------------------- | ---------------- | ----------------------- |
+| `/sota-scan quick`      | top 3 gaps       | a fast check            |
+| `/sota-scan`            | full scorecard   | everyday use            |
 | `/sota-scan exhaustive` | the deepest scan | launch / investor ready |
 
 **First time? Start with `quick`.** Cheap, fast taste. Go deeper once you like it.
@@ -93,11 +95,11 @@ Done. It does the rest.
 
 It does real research — reads a dozen competitor projects, not just summaries. So it's not instant or free:
 
-| Mode | Roughly |
-|---|---|
-| `quick` | ~80–150k tokens · a minute or two |
-| `standard` | ~150–350k tokens · a few minutes |
-| `exhaustive` | ~400k+ tokens · several minutes |
+| Mode         | Roughly                           |
+| ------------ | --------------------------------- |
+| `quick`      | ~80–150k tokens · a minute or two |
+| `standard`   | ~150–350k tokens · a few minutes  |
+| `exhaustive` | ~400k+ tokens · several minutes   |
 
 Use it now and then — before a launch, a pitch, or when you're curious — not on every commit. On a Claude plan it's bundled. Paying per token? Lean on `quick`.
 
