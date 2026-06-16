@@ -232,34 +232,41 @@ function clusterCandidates(profiles, opts = {}) {
     return x;
   };
   const merges = [];
+  // Accumulated member count per union-find root. Seeded from each group's own
+  // members and updated on every union, so both the absorb gate and the
+  // canonical-label choice read the CURRENT cluster size — not the stale,
+  // per-seed count, which understated any cluster that had grown by absorbing
+  // strays (a tiny seed could then keep absorbing, and win the canonical label
+  // over a larger merged cluster).
+  const rootSize = new Map(groups.map((g) => [g.id, g.members.length]));
   for (let i = 0; i < groups.length; i++) {
     for (let j = i + 1; j < groups.length; j++) {
       const a = groups[i];
       const b = groups[j];
+      const ra = find(a.id);
+      const rb = find(b.id);
+      if (ra === rb) continue;
       const labelSim = jaccard(new Set(a.id.split("-")), new Set(b.id.split("-")));
-      // Absorb-by-overlap is gated to small stray groups so two well-populated
+      // Absorb-by-overlap is gated to small stray clusters so two well-populated
       // canonical clusters can never collapse into one — only a 1–2 member stray
-      // label gets pulled into the canonical cluster whose tokens contain it.
-      const minMembers = Math.min(a.members.length, b.members.length);
+      // gets pulled into the canonical cluster whose tokens contain it. The gate
+      // reads ACCUMULATED size (rootSize) so a cluster that has already grown by
+      // absorbing strays is no longer itself treated as a stray.
+      const minMembers = Math.min(rootSize.get(ra), rootSize.get(rb));
       const overlap = overlapCoeff(a.tokens, b.tokens);
       const absorb = minMembers <= smallGroupAbsorbMax && overlap >= absorbOverlapThreshold;
       if (labelSim >= labelMergeThreshold || absorb) {
-        const ra = find(a.id);
-        const rb = find(b.id);
-        if (ra !== rb) {
-          // Keep the larger group's id as the canonical label.
-          const sizeA = seeds.get(ra).members.length;
-          const sizeB = seeds.get(rb).members.length;
-          const [keep, drop] = sizeA >= sizeB ? [ra, rb] : [rb, ra];
-          parent.set(drop, keep);
-          merges.push({
-            kept: keep,
-            merged: drop,
-            by: labelSim >= labelMergeThreshold ? "label" : "overlap",
-            labelSim: round3(labelSim),
-            overlap: round3(overlap),
-          });
-        }
+        // Keep the id of the larger ACCUMULATED cluster as the canonical label.
+        const [keep, drop] = rootSize.get(ra) >= rootSize.get(rb) ? [ra, rb] : [rb, ra];
+        parent.set(drop, keep);
+        rootSize.set(keep, rootSize.get(ra) + rootSize.get(rb));
+        merges.push({
+          kept: keep,
+          merged: drop,
+          by: labelSim >= labelMergeThreshold ? "label" : "overlap",
+          labelSim: round3(labelSim),
+          overlap: round3(overlap),
+        });
       }
     }
   }

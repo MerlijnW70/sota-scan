@@ -96,6 +96,62 @@ test("synonym labels merge into their canonical cluster", () => {
   );
 });
 
+// Regression for the union-find size bug: keep/drop and the absorb gate must read
+// ACCUMULATED cluster size, not the immutable per-seed member count. Pre-fix both
+// read seed sizes, so a tiny seed that had grown by absorbing strays understated
+// its size — letting it keep absorbing and win the canonical label unfairly.
+const mkProf = (label, repo) => ({
+  repo,
+  cluster_label: label,
+  methodology: "alpha beta gamma",
+  feature_categories: ["alpha", "beta", "gamma"],
+});
+
+test("absorb gate respects ACCUMULATED size — a grown cluster does not swallow a peer (regression #2)", () => {
+  // aaa/aab/aac are three 1-member strays sharing tokens; they collapse into one
+  // cluster rooted at "aaa" (accumulated size 3). "bigcluster" is a separate,
+  // well-populated 3-member group with the same tokens but NOT a stray.
+  const { clusters } = clusterCandidates([
+    mkProf("aaa", "r1"),
+    mkProf("aab", "r2"),
+    mkProf("aac", "r3"),
+    mkProf("bigcluster", "b1"),
+    mkProf("bigcluster", "b2"),
+    mkProf("bigcluster", "b3"),
+  ]);
+  const byId = Object.fromEntries(clusters.map((c) => [c.id, c.size]));
+  // Pre-fix the gate read aaa's stale seed size (1) and wrongly absorbed the
+  // equally-large bigcluster, collapsing both into a single cluster.
+  assert.equal(
+    clusters.length,
+    2,
+    `two distinct clusters must survive, got ${clusters.map((c) => `${c.id}(${c.size})`)}`,
+  );
+  assert.equal(byId["aaa"], 3, "the three strays collapse into one accumulated cluster");
+  assert.equal(byId["bigcluster"], 3, "the well-populated cluster is preserved, not absorbed");
+});
+
+test("canonical label follows accumulated size after transitive merges (regression #1)", () => {
+  // core-a absorbs core-b + core-c (accumulated size 3) BEFORE meeting the
+  // 2-member "hub". The merged cluster must keep "core-a" (larger accumulated
+  // side). Pre-fix, keep/drop compared raw seed sizes (core-a=1 vs hub=2) and
+  // relabeled the whole 5-member cluster "hub".
+  const { clusters } = clusterCandidates([
+    mkProf("core-a", "r1"),
+    mkProf("core-b", "r2"),
+    mkProf("core-c", "r3"),
+    mkProf("hub", "h1"),
+    mkProf("hub", "h2"),
+  ]);
+  assert.equal(clusters.length, 1, `expected one merged cluster, got ${clusters.map((c) => c.id)}`);
+  assert.equal(clusters[0].size, 5);
+  assert.equal(
+    clusters[0].id,
+    "core-a",
+    "canonical id must be the larger accumulated side, not the stale-seed winner",
+  );
+});
+
 test("user repo is classified into the fuzzy cluster", () => {
   const { clusters } = clusterCandidates(candidates);
   const cls = classifyRepo(user, clusters);
