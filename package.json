@@ -5,7 +5,16 @@
   "type": "module",
   "description": "Benchmark a repo against the state of the art — clustering core + tests for the sota-scan skill.",
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --check .",
+    "format:write": "prettier --write ."
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.5.0",
+    "globals": "^17.6.0",
+    "prettier": "^3.8.4"
+  }
 }

@@ -1,0 +1,9 @@
+node_modules
+.gate
+coverage
+dist
+package-lock.json
+test/fixtures
+.sota
+AGENTS.md
+CLAUDE.md
