@@ -205,6 +205,7 @@ A benchmark you can't re-run and compare can't show progress. After building the
 - **Before writing, read the previous `.sota/last-scan.json` if it exists** and render a one-line **"Since last scan"** delta at the top of the dashboard: coverage Δ (e.g. `50% → 63%, +1 met`), tier change, capabilities newly **met** or newly **lost**, and competitors **added/dropped** from the field. If the rubric `version` changed between runs, say so — a score move may be the bar moving, not the repo.
 - **First run** (no prior file): say "baseline — no prior scan to diff" and just write the file.
 - These files belong to the repo being benchmarked (so history travels with it). Mention them in the output so the user can choose to commit or `.gitignore` them.
+- **Shareable report (`--report`).** After persisting `last-scan.json`, a standalone Markdown report can be exported with `node scripts/sota-report.mjs --report`, which renders `.sota/report.<domain>.md` (header metadata, summary, the capability matrix, the high-confidence gap list, and a hyperlinked sources/disclosures audit trail) from the persisted scan via the pure `lib/report.mjs` renderer. It is **deterministic** — same `last-scan.json`, byte-identical report — so `node scripts/sota-report.mjs --check` fails if the on-disk report is stale. Run it (or preview to stdout with no flag) when the user wants a shareable artifact beyond the terminal dashboard + JSON.
 
 ## Rules — blockers vs. quality
 

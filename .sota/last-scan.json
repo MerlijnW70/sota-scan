@@ -1,32 +1,36 @@
 {
-  "date": "2026-05-31",
+  "date": "2026-06-22",
   "mode": "standard",
   "domains": ["sota-benchmark-agent"],
   "rubric_version": 3,
+  "verdict": "Frontier — every table-stakes capability is present, and with the new report exporter (scripts/sota-report.mjs) the last open edge item, shareable-report-export, is now closed (edge 3/3).",
   "field": [
-    { "repo": "bytedance/deer-flow",                "stars": 70095, "pushed": "2026-05-31", "type": "technically-advanced", "note": "fresh deep-research leader; replaces stale storm as the bar" },
-    { "repo": "assafelovic/gpt-researcher",          "stars": 27419, "pushed": "2026-05-28", "type": "canonical" },
-    { "repo": "langchain-ai/open_deep_research",     "stars": 11539, "pushed": "2026-05-26", "type": "popular" },
-    { "repo": "langchain-ai/local-deep-researcher",  "stars": 9203,  "pushed": "2026-04-21", "type": "popular" },
-    { "repo": "ossf/scorecard",                      "stars": 5467,  "pushed": "2026-05-25", "type": "canonical", "note": "grade-a-repo half of the field" },
-    { "repo": "stanford-oval/storm",                 "stars": 28285, "pushed": "2025-09-30", "type": "stale-reference", "note": "stale ~8mo; not the bar" },
-    { "repo": "debba/gaphunter-skill",               "stars": 14,    "pushed": "2026-04-29", "type": "niche-relevant", "note": "most directly comparable: a Claude Code skill that reads your repo + outputs a gap matrix; differs by mining reviews/issues rather than benchmarking competitor code/docs" }
+    { "repo": "bytedance/deer-flow",               "stars": 73118, "pushed": "2026-06-22", "type": "technically-advanced", "note": "deep-research leader, fresh; the bar for the broader research-agent cluster" },
+    { "repo": "stanford-oval/storm",               "stars": 29207, "pushed": "2025-09-30", "type": "stale-reference", "note": "stale ~9mo; not the bar" },
+    { "repo": "assafelovic/gpt-researcher",        "stars": 27842, "pushed": "2026-05-28", "type": "canonical", "note": "canonical cited deep-research agent; standalone report export (PDF/Docx/MD)" },
+    { "repo": "langchain-ai/open_deep_research",   "stars": 11783, "pushed": "2026-06-21", "type": "popular" },
+    { "repo": "ossf/scorecard",                    "stars": 5541,  "pushed": "2026-06-22", "type": "canonical", "note": "grade-a-repo half of the field; deterministic checks, not competitor benchmarking" },
+    { "repo": "debba/gaphunter-skill",             "stars": 15,    "pushed": "2026-04-29", "type": "niche-relevant", "note": "closest same-modality direct peer: a Claude Code skill that reads your repo + outputs a gap matrix" }
+  ],
+  "field_unverified": [
+    { "name": "Repo Research (Claude Code skill, mcpmarket)", "type": "niche-relevant", "note": "same-modality skill that discovers + analyzes external repos and writes comparative Markdown reports; could not verify rubric/persistence this run (source 429) — listed, not scored." }
   ],
   "matrix": [
-    { "id": "web-retrieval",               "us": "met",     "tier": "table-stakes" },
-    { "id": "cited-grounding",             "us": "met",     "tier": "table-stakes" },
-    { "id": "structured-report",           "us": "met",     "tier": "table-stakes" },
-    { "id": "claim-verification",          "us": "met",     "tier": "table-stakes" },
-    { "id": "saturating-search",           "us": "met",     "tier": "table-stakes" },
-    { "id": "deterministic-rubric",        "us": "met",     "tier": "table-stakes" },
-    { "id": "reproducible-rerun",          "us": "met",     "tier": "table-stakes" },
-    { "id": "machine-readable",            "us": "met",     "tier": "edge" },
-    { "id": "parallel-comparator-fanout",  "us": "met",     "tier": "edge" },
-    { "id": "shareable-report-export",     "us": "missing", "tier": "edge" }
+    { "id": "web-retrieval",              "capability": "Multi-source web + GitHub retrieval", "us": "met",     "tier": "table-stakes", "sota": "gpt-researcher, deer-flow", "reference": "assafelovic/gpt-researcher" },
+    { "id": "cited-grounding",            "capability": "Cited grounding (no source, no claim)", "us": "met",   "tier": "table-stakes", "sota": "gpt-researcher",            "reference": "assafelovic/gpt-researcher" },
+    { "id": "structured-report",          "capability": "Structured action-first report",     "us": "met",     "tier": "table-stakes", "sota": "gaphunter-skill",           "reference": "debba/gaphunter-skill" },
+    { "id": "claim-verification",         "capability": "Per-gap claim verification",         "us": "met",     "tier": "table-stakes", "sota": "gpt-researcher",            "reference": "assafelovic/gpt-researcher" },
+    { "id": "saturating-search",          "capability": "Saturating search (2 empty rounds)", "us": "met",     "tier": "table-stakes", "sota": "deer-flow",                 "reference": "bytedance/deer-flow" },
+    { "id": "deterministic-rubric",       "capability": "Deterministic saved rubric",         "us": "met",     "tier": "table-stakes", "sota": "ossf/scorecard",            "reference": "ossf/scorecard" },
+    { "id": "reproducible-rerun",         "capability": "Reproducible rerun + diff",          "us": "met",     "tier": "table-stakes", "sota": "ossf/scorecard",            "reference": "ossf/scorecard" },
+    { "id": "parallel-comparator-fanout", "capability": "Parallel comparator fan-out",        "us": "met",     "tier": "edge",         "sota": "deer-flow",                 "reference": "bytedance/deer-flow" },
+    { "id": "machine-readable",           "capability": "Machine-readable matrix (JSON)",     "us": "met",     "tier": "edge",         "sota": "ossf/scorecard",            "reference": "ossf/scorecard" },
+    { "id": "shareable-report-export",    "capability": "Standalone shareable report export", "us": "met",     "tier": "edge",         "sota": "gpt-researcher",            "reference": "assafelovic/gpt-researcher" }
   ],
   "coverage": { "met": 7, "total": 7, "pct": 100 },
   "tier": "FRONTIER",
   "gaps_total": 0,
-  "edge_coverage": { "met": 2, "total": 3 },
-  "caveat": "Standard mode — light saturation; both search rounds surfaced new comparators (deer-flow, gaphunter-skill), so the field is not exhaustively saturated. Table-stakes 7/7 met → FRONTIER, 0 table-stakes gaps. One NEW edge gap this run: shareable-report-export (added to rubric v3). Out-of-scope by design and NOT scored as a gap: GapHunter-style review/issue mining — sota-scan benchmarks competitor code/docs, a deliberately different evidence basis."
+  "gaps": [],
+  "edge_coverage": { "met": 3, "total": 3 },
+  "caveat": "Standard mode — light saturation. Field refreshed live via gh (deer-flow 73.1k and fresh; gpt-researcher 27.8k; storm ~9mo stale; scorecard 5.5k). No new table-stakes surfaced, so the rubric stays at v3. The prior edge gap shareable-report-export is now MET: scripts/sota-report.mjs (lib/report.mjs) exports .sota/report.<domain>.md. Edge now 3/3. One same-modality candidate (Repo Research skill) remained unverifiable (429) and is listed, not scored."
 }
