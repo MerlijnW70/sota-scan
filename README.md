@@ -105,11 +105,23 @@ Use it now and then — before a launch, a pitch, or when you're curious — not
 
 ---
 
+## Share the result
+
+Every scan is saved to [`.sota/`](.sota/) so you can re-run it and track progress. Want a copy you can drop in a PR, an issue, or a doc? Export a standalone Markdown report:
+
+```bash
+node scripts/sota-report.mjs --report   # writes .sota/report.<domain>.md
+```
+
+You get a clean, self-contained file: summary + tier, the capability matrix, the high-confidence gaps, and a cited sources/disclosures trail. It's **deterministic** — the same scan always produces the same report — so `--check` flags a stale one, and no flag previews it to your terminal. See a real one: [`.sota/report.sota-benchmark-agent.md`](.sota/report.sota-benchmark-agent.md).
+
+---
+
 ## Good to know
 
 - Needs **Claude Code** with internet.
 - It won't tell you to pivot. Just how to win at what you already do.
-- It scanned itself and came out top-tier. Proof in [`.sota/`](.sota/).
+- It scanned itself and came out top-tier — proof (and a [shareable report](.sota/report.sota-benchmark-agent.md)) in [`.sota/`](.sota/).
 
 ---
 
